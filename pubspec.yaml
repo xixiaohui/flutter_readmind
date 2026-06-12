@@ -1,0 +1,52 @@
+name: flutter_readmind
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Common dependencies - uncomment as needed
+  # State management
+  # provider: ^6.1.1
+  # flutter_riverpod: ^2.4.8
+
+  # Navigation
+  # go_router: ^13.0.0
+
+  # Network & API
+  # http: ^1.1.0
+  # dio: ^5.4.0
+
+  # Storage
+  # shared_preferences: ^2.2.2
+  # sqflite: ^2.3.0
+
+  # UI & Utilities
+  # cached_network_image: ^3.3.0
+  # flutter_svg: ^2.0.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/
+  #   - assets/
+
+  # To add custom fonts to your application, add a fonts section here:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic

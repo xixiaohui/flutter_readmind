@@ -1,0 +1,175 @@
+{
+  "elements": {
+    "purchase_status": {
+      "id": {
+        "library_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+        "name": "purchase_status"
+      },
+      "declaration": {
+        "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+        "offset": 124,
+        "name": "PurchaseStatus"
+      },
+      "references": [],
+      "type": "table",
+      "columns": [
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "id",
+          "nameInDart": "id",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+            "offset": 183,
+            "name": "id"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 主键 ID",
+          "constraints": [
+            {
+              "type": "primary",
+              "is_auto_increment": true
+            }
+          ],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": true,
+          "nameInSql": "product_id",
+          "nameInDart": "productId",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+            "offset": 248,
+            "name": "productId"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 产品 ID",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "string"
+          },
+          "nullable": true,
+          "nameInSql": "purchase_token",
+          "nameInDart": "purchaseToken",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+            "offset": 331,
+            "name": "purchaseToken"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 购买令牌",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "is_active",
+          "nameInDart": "isActive",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+            "offset": 421,
+            "name": "isActive"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": {
+            "elements": [
+              "const ",
+              {
+                "lexeme": "Constant",
+                "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+              },
+              "(0)"
+            ]
+          },
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 是否激活",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": true,
+          "nameInSql": "purchased_at",
+          "nameInDart": "purchasedAt",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+            "offset": 524,
+            "name": "purchasedAt"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 购买时间",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": true,
+          "nameInSql": "expires_at",
+          "nameInDart": "expiresAt",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/purchase_status_table.dart",
+            "offset": 613,
+            "name": "expiresAt"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 过期时间",
+          "constraints": [],
+          "customConstraints": null
+        }
+      ],
+      "existing_data_class": null,
+      "table_constraints": [],
+      "custom_parent_class": null,
+      "interfaces_for_row_class": [],
+      "fixed_entity_info_name": null,
+      "base_dart_name": "PurchaseStatus",
+      "row_class_name": "PurchaseStatusData",
+      "companion_class_name": null,
+      "without_rowid": false,
+      "strict": false,
+      "write_default_constraints": true,
+      "custom_constraints": [],
+      "attached_indices": []
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart"
+  ]
+}

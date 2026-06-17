@@ -1,0 +1,15 @@
+{
+  "elements": {},
+  "imports": [
+    "package:go_router/go_router.dart",
+    "package:flutter_readmind/features/library/presentation/pages/library_page.dart",
+    "package:flutter_readmind/features/highlights/presentation/pages/highlights_page.dart",
+    "package:flutter_readmind/features/posters/presentation/pages/posters_page.dart",
+    "package:flutter_readmind/features/settings/presentation/pages/settings_page.dart",
+    "package:flutter_readmind/features/import/presentation/pages/import_page.dart",
+    "package:flutter_readmind/features/reader/presentation/pages/reader_page.dart",
+    "package:flutter_readmind/features/purchase/presentation/pages/purchase_page.dart",
+    "package:flutter_readmind/features/search/presentation/pages/search_page.dart",
+    "package:flutter_readmind/app/app_shell.dart"
+  ]
+}

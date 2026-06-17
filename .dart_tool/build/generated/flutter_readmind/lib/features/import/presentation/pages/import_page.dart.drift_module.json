@@ -1,0 +1,11 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter_riverpod/flutter_riverpod.dart",
+    "package:file_picker/file_picker.dart",
+    "package:flutter_readmind/l10n/app_localizations.dart",
+    "package:flutter_readmind/features/import/domain/entities/import_task.dart",
+    "package:flutter_readmind/features/import/presentation/controllers/import_controller.dart"
+  ]
+}

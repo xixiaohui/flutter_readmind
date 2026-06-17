@@ -1,23 +1,66 @@
+// widget_test.dart
+// ReadMeet Quotes 应用测试
+
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:drift/drift.dart' hide isNotNull;
 
 import 'package:flutter_readmind/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  driftRuntimeOptions.dontWarnAboutMultipleDatabases = true;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  group('ReadMeet App Tests', () {
+    testWidgets('App launches with ProviderScope and MaterialApp',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(child: ReadMeetApp()),
+      );
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+      expect(find.byType(MaterialApp), findsOneWidget);
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    testWidgets('App has bottom navigation with 4 tabs',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(child: ReadMeetApp()),
+      );
+
+      expect(find.byType(NavigationBar), findsOneWidget);
+
+      final navBar = tester.widget<NavigationBar>(find.byType(NavigationBar));
+      expect(navBar.destinations.length, 4);
+    });
+
+    testWidgets('App supports theme configuration',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(child: ReadMeetApp()),
+      );
+
+      final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      expect(materialApp.theme, isNotNull);
+      expect(materialApp.darkTheme, isNotNull);
+    });
+
+    testWidgets('App title is correct', (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(child: ReadMeetApp()),
+      );
+
+      final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      expect(materialApp.title, 'ReadMeet Quotes');
+    });
+
+    testWidgets('App debug mode is disabled',
+        (WidgetTester tester) async {
+      await tester.pumpWidget(
+        const ProviderScope(child: ReadMeetApp()),
+      );
+
+      final materialApp = tester.widget<MaterialApp>(find.byType(MaterialApp));
+      expect(materialApp.debugShowCheckedModeBanner, false);
+    });
   });
 }

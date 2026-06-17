@@ -1,69 +1,52 @@
+// main.dart
+// 应用入口
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'app/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'core/theme/app_theme_mode.dart';
+import 'core/theme/theme_controller.dart';
+import 'core/theme/locale_controller.dart';
+import 'l10n/app_localizations.dart';
 
 void main() {
-  runApp(const MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(const ProviderScope(child: ReadMeetApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+/// ReadMeet 主应用
+class ReadMeetApp extends ConsumerWidget {
+  const ReadMeetApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Readmind',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Readmind Home Page'),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeControllerProvider);
+    final locale = ref.watch(localeControllerProvider);
+
+    return MaterialApp.router(
+      title: 'ReadMeet Quotes',
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: _mapToThemeMode(themeMode),
+      locale: locale,
+      routerConfig: appRouter,
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+  /// 将 AppThemeMode 映射到 ThemeMode
+  ThemeMode _mapToThemeMode(AppThemeMode mode) {
+    switch (mode) {
+      case AppThemeMode.light:
+        return ThemeMode.light;
+      case AppThemeMode.dark:
+        return ThemeMode.dark;
+      case AppThemeMode.sepia:
+        return ThemeMode.light;
+    }
   }
 }

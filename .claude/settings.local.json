@@ -1,7 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(/d/flutter/flutter/bin/flutter *)"
+      "Bash(/d/flutter/flutter/bin/flutter *)",
+      "Bash(git config *)",
+      "Bash(git commit *)"
     ]
   }
 }

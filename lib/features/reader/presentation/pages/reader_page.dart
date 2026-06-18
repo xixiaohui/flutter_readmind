@@ -369,12 +369,10 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
 
   /// 从选中文本生成海报 → 打开编辑页面
   void _createPosterFromSelection(String selectedText) {
-    final content = ref.read(readerControllerProvider).content;
     ref.read(posterControllerProvider.notifier).createPoster(
           highlightId: 0,
           quoteText: selectedText,
-          bookTitle: content?.title ?? widget.bookTitle,
-          author: content?.author,
+          bookTitle: widget.bookTitle,
         );
     Navigator.of(context).push(MaterialPageRoute(
         builder: (_) => const PosterEditorPage()));

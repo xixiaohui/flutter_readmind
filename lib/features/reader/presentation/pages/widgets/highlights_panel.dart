@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../../l10n/app_localizations.dart';
 import '../../../../../../features/shared/domain/repositories/highlight_repository.dart';
+import '../../../../../../core/di/injection.dart';
 import '../../../../../../features/posters/presentation/controllers/poster_controller.dart';
 import '../../../../../../features/posters/presentation/pages/poster_editor_page.dart';
 import '../../controllers/reader_controller.dart';
@@ -43,13 +44,21 @@ class HighlightsPanel extends ConsumerWidget {
                   onPressed: () async {
                     final controller =
                         ref.read(posterControllerProvider.notifier);
+                    // 从数据库获取真实书名
+                    String? bookTitle;
+                    final content = readerState.content;
+                    if (content != null) {
+                      final bookRepo = ref.read(bookRepositoryProvider);
+                      final book =
+                          await bookRepo.getBookById(content.bookId);
+                      bookTitle = book?.title;
+                    }
                     for (final h in highlights) {
                       controller.createPoster(
                         highlightId: h.id,
                         quoteText: h.selectedText,
-                        bookTitle: readerState.content?.title,
+                        bookTitle: bookTitle,
                       );
-                      // 直接保存到数据库（无截图控制器时保存纯文本海报）
                       await controller.savePoster();
                     }
                     if (context.mounted) {
@@ -165,11 +174,21 @@ class _HighlightListItem extends ConsumerWidget {
                 IconButton(
                   icon: const Icon(Icons.image_outlined, size: 20),
                   tooltip: l10n.createPoster,
-                  onPressed: () {
+                  onPressed: () async {
+                    // 从数据库获取真实书名
+                    String? bookTitle;
+                    final content = readerState.content;
+                    if (content != null) {
+                      final bookRepo =
+                          ref.read(bookRepositoryProvider);
+                      final book =
+                          await bookRepo.getBookById(content.bookId);
+                      bookTitle = book?.title;
+                    }
                     ref.read(posterControllerProvider.notifier).createPoster(
                           highlightId: highlight.id,
                           quoteText: highlight.selectedText,
-                          bookTitle: readerState.content?.title,
+                          bookTitle: bookTitle,
                         );
                     Navigator.pop(context);
                     Navigator.of(context).push(MaterialPageRoute(

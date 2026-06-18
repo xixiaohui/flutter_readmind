@@ -52,41 +52,47 @@ class PosterFullView extends ConsumerWidget {
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // 引用文本
               Text('"${poster.quoteText}"',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontStyle: FontStyle.italic, color: fg, height: 1.6)),
-              const SizedBox(height: 32),
-              Container(width: 60, height: 1.5, color: sec.withAlpha(77)),
-              const SizedBox(height: 20),
-              if (poster.bookTitle != null)
-                Text(poster.bookTitle!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: sec)),
-              if (poster.author != null) ...[
-                const SizedBox(height: 8),
-                Text(poster.author!,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: sec.withAlpha(200))),
-              ],
+                      fontStyle: FontStyle.italic,
+                      color: fg,
+                      height: 1.55,
+                      fontWeight: FontWeight.w500)),
+              const SizedBox(height: 28),
+              // 分隔线
+              Container(width: 120, height: 3, color: sec.withAlpha(77)),
               const SizedBox(height: 24),
+              // 引用来源横幅（与编辑器一致）
+              Builder(builder: (_) {
+                final title = poster.bookTitle;
+                final author = poster.author;
+                final text = <String>[
+                  if (title != null && title.isNotEmpty) '《$title》',
+                  if (author != null && author.isNotEmpty) author,
+                ].join(' · ');
+                if (text.isEmpty) return const SizedBox.shrink();
+                return Text('— $text',
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: sec,
+                        fontWeight: FontWeight.w400,
+                        fontStyle: FontStyle.italic));
+              }),
+              const SizedBox(height: 32),
+              // 品牌
               Text(l10n.appTitle,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: sec.withAlpha(153), letterSpacing: 2)),
-              const SizedBox(height: 16),
-              Text(_label(l10n, poster.template),
-                  style: Theme.of(context)
-                      .textTheme
-                      .labelSmall
-                      ?.copyWith(color: sec.withAlpha(102))),
+                      color: sec.withAlpha(102),
+                      letterSpacing: 4,
+                      fontWeight: FontWeight.w400)),
             ],
           ),
         ),
@@ -107,12 +113,4 @@ class PosterFullView extends ConsumerWidget {
     }
   }
 
-  String _label(AppLocalizations l10n, PosterTemplate t) {
-    switch (t) {
-      case PosterTemplate.minimal: return l10n.templateMinimal;
-      case PosterTemplate.paper: return l10n.templatePaper;
-      case PosterTemplate.dark: return l10n.templateDark;
-      case PosterTemplate.cover: return l10n.templateCover;
-    }
-  }
 }

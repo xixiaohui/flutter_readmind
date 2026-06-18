@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_riverpod/flutter_riverpod.dart",
-    "package:flutter_readmind/features/posters/domain/entities/poster.dart"
-  ]
-}

@@ -1,4 +1,4 @@
-package com.example.flutter_readmind
+package com.xxh.flutter_readmind
 
 import io.flutter.embedding.android.FlutterActivity
 

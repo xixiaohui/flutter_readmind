@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_riverpod/flutter_riverpod.dart",
-    "package:shared_preferences/shared_preferences.dart",
-    "package:flutter_readmind/core/theme/app_theme_mode.dart",
-    "package:flutter_readmind/core/constants/app_constants.dart"
-  ]
-}

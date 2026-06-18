@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_riverpod/flutter_riverpod.dart",
-    "package:flutter_readmind/core/di/injection.dart",
-    "package:flutter_readmind/features/shared/domain/repositories/note_repository.dart"
-  ]
-}

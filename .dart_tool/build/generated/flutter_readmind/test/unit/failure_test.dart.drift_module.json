@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_test/flutter_test.dart",
-    "package:flutter_readmind/core/errors/failure.dart",
-    "package:flutter_readmind/core/errors/error_handler.dart"
-  ]
-}

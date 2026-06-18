@@ -1,6 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_readmind/core/database/app_database.dart"
-  ]
-}

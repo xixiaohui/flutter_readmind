@@ -1,7 +1,7 @@
 name: flutter_readmind
 description: ReadMeet Quotes - Read. Highlight. Share.
 publish_to: 'none'
-version: 1.0.0+1
+version: 2026.06.18+1781771462
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

@@ -1,9 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:drift/drift.dart",
-    "package:flutter_readmind/core/database/app_database.dart",
-    "package:flutter_readmind/core/database/daos/book_dao.dart",
-    "package:flutter_readmind/features/shared/domain/repositories/book_repository.dart"
-  ]
-}

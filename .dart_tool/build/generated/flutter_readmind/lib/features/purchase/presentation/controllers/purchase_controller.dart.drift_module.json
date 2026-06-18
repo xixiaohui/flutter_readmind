@@ -1,7 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_riverpod/flutter_riverpod.dart",
-    "package:flutter_readmind/features/purchase/domain/entities/purchase_status.dart"
-  ]
-}

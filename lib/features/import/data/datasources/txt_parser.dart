@@ -23,15 +23,12 @@ class TxtParser {
     final bytes = await file.readAsBytes();
     final content = _decodeContent(bytes);
 
-    // 提取标题（第一行非空文本）
-    String title = fileName.replaceAll('.txt', '').replaceAll('_', ' ');
-    for (final line in content.split('\n')) {
-      final trimmed = line.trim();
-      if (trimmed.isNotEmpty) {
-        title = trimmed.substring(0, trimmed.length.clamp(0, 200));
-        break;
-      }
-    }
+    // 标题使用文件名（中文小说第一行通常是"第X回"等章回名，不是书名）
+    final title = fileName
+        .replaceAll('.txt', '')
+        .replaceAll('.TXT', '')
+        .replaceAll('_', ' ')
+        .trim();
 
     // 估算页数
     final lineCount = content.split('\n').length;

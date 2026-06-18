@@ -178,9 +178,31 @@ class _HighlightCard extends ConsumerWidget {
                   icon: const Icon(Icons.delete_outline, size: 20),
                   tooltip: l10n.delete,
                   onPressed: () {
-                    ref
-                        .read(highlightsControllerProvider.notifier)
-                        .deleteHighlight(highlight.id);
+                    showDialog(
+                      context: context,
+                      builder: (ctx) => AlertDialog(
+                        title: Text(l10n.delete),
+                        content: Text('${l10n.confirm}?'),
+                        actions: [
+                          TextButton(
+                              onPressed: () => Navigator.pop(ctx),
+                              child: Text(l10n.cancel)),
+                          TextButton(
+                            onPressed: () {
+                              ref
+                                  .read(highlightsControllerProvider.notifier)
+                                  .deleteHighlight(highlight.id);
+                              Navigator.pop(ctx);
+                            },
+                            child: Text(l10n.delete,
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .error)),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 ),
               ],

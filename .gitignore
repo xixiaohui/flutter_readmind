@@ -76,3 +76,7 @@
 # Custom
 *.md5sum
 *.sup
+
+./build_output/*
+./build_output/**/*
+./build_output

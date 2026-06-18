@@ -10,6 +10,7 @@ class HighlightData {
   final String? highlightColor;
   final int startOffset;
   final int endOffset;
+  final int? pageNumber;
 
   const HighlightData({
     required this.id,
@@ -19,6 +20,7 @@ class HighlightData {
     this.highlightColor,
     required this.startOffset,
     required this.endOffset,
+    this.pageNumber,
   });
 }
 
@@ -38,6 +40,9 @@ abstract class HighlightRepository {
 
   /// 删除高亮
   Future<int> deleteHighlight(int id);
+
+  /// 监听所有高亮变化
+  Stream<List<HighlightData>> watchAllHighlights();
 
   /// 监听书籍的高亮变化
   Stream<List<HighlightData>> watchHighlightsByBookId(int bookId);

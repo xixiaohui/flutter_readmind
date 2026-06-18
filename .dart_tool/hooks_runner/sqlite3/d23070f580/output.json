@@ -2,7 +2,7 @@
   "assets": [
     {
       "encoding": {
-        "file": "E:\\workspace\\claw\\flutter_readmind\\.dart_tool\\hooks_runner\\shared\\sqlite3\\build\\download-16e6703c\\libsqlite3.so",
+        "file": "E:\\workspace\\claw\\flutter_readmind\\.dart_tool\\hooks_runner\\shared\\sqlite3\\build\\download-12e826a2\\libsqlite3.so",
         "id": "package:sqlite3/src/ffi/libsqlite3.g.dart",
         "link_mode": {
           "type": "dynamic_loading_bundle"
@@ -13,5 +13,5 @@
   ],
   "assets_for_linking": {},
   "status": "success",
-  "timestamp": "2026-06-17 17:13:17.000"
+  "timestamp": "2026-06-18 14:14:35.000"
 }

@@ -2,11 +2,16 @@
 // 高亮页面
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../l10n/app_localizations.dart';
 import '../controllers/highlights_controller.dart';
+import '../../../../core/di/injection.dart';
+import '../../../../features/shared/domain/repositories/book_repository.dart';
 import '../../../../features/shared/domain/repositories/highlight_repository.dart';
+import '../../../../features/posters/presentation/controllers/poster_controller.dart';
+import '../../../../features/posters/presentation/pages/poster_editor_page.dart';
 
 /// 高亮页面
 class HighlightsPage extends ConsumerWidget {
@@ -105,6 +110,8 @@ class _HighlightCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: Padding(
@@ -114,6 +121,7 @@ class _HighlightCard extends ConsumerWidget {
           children: [
             // 高亮文本
             Container(
+              width: double.infinity,
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
                 color: _getHighlightColor(highlight.highlightColor)
@@ -131,16 +139,44 @@ class _HighlightCard extends ConsumerWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                // 生成海报
+                TextButton.icon(
+                  icon: const Icon(Icons.auto_awesome, size: 18),
+                  label: Text(l10n.generatePoster,
+                      style: const TextStyle(fontSize: 13)),
+                  onPressed: () async {
+                    // 查询书名
+                    final bookRepo = ref.read(bookRepositoryProvider);
+                    final book =
+                        await bookRepo.getBookById(highlight.bookId);
+                    ref.read(posterControllerProvider.notifier).createPoster(
+                          highlightId: highlight.id,
+                          quoteText: highlight.selectedText,
+                          bookTitle: book?.title,
+                          author: book?.author,
+                        );
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const PosterEditorPage()));
+                  },
+                ),
+                const SizedBox(width: 4),
                 IconButton(
                   icon: const Icon(Icons.copy, size: 20),
-                  tooltip: 'Copy',
+                  tooltip: l10n.copy,
                   onPressed: () {
-                    // Copy to clipboard
+                    Clipboard.setData(
+                        ClipboardData(text: highlight.selectedText));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.copy),
+                        duration: const Duration(seconds: 1),
+                      ),
+                    );
                   },
                 ),
                 IconButton(
                   icon: const Icon(Icons.delete_outline, size: 20),
-                  tooltip: 'Delete',
+                  tooltip: l10n.delete,
                   onPressed: () {
                     ref
                         .read(highlightsControllerProvider.notifier)
@@ -162,3 +198,4 @@ class _HighlightCard extends ConsumerWidget {
     return Color(int.parse('FF$hex', radix: 16));
   }
 }
+

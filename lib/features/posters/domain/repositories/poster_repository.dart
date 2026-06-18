@@ -11,6 +11,9 @@ abstract class PosterRepository {
   /// 获取所有海报
   Future<List<Poster>> getAllPosters();
 
+  /// 监听所有海报变化
+  Stream<List<Poster>> watchAllPosters();
+
   /// 删除海报
   Future<int> deletePoster(String id);
 }

@@ -39,6 +39,10 @@ class HighlightDao {
   Future<int> deleteHighlight(int id) =>
       (db.delete(db.highlights)..where((t) => t.id.equals(id))).go();
 
+  /// 监听所有高亮变化
+  Stream<List<Highlight>> watchAllHighlights() =>
+      db.select(db.highlights).watch();
+
   /// 监听书籍的高亮变化
   Stream<List<Highlight>> watchHighlightsByBookId(int bookId) {
     final query = db.select(db.highlights)

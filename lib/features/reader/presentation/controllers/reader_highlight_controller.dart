@@ -83,6 +83,7 @@ class ReaderHighlightController extends StateNotifier<ReaderHighlightState> {
     required String selectedText,
     required int startOffset,
     required int endOffset,
+    required int pageNumber,
   }) async {
     if (selectedText.isEmpty) return;
 
@@ -94,6 +95,7 @@ class ReaderHighlightController extends StateNotifier<ReaderHighlightState> {
       highlightColor: state.selectedColor.hex,
       startOffset: startOffset,
       endOffset: endOffset,
+      pageNumber: pageNumber,
     );
 
     try {

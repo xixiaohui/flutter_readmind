@@ -16,9 +16,10 @@ class PosterFullView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isDark = poster.template == PosterTemplate.dark;
-    final bg = isDark ? const Color(0xFF1A1A2E) : Colors.white;
-    final fg = isDark ? Colors.white : const Color(0xFF1D1D1F);
+    final colors = _colors(poster.template);
+    final bg = colors.$1;
+    final fg = colors.$2;
+    final sec = colors.$3;
 
     return Scaffold(
       backgroundColor: bg,
@@ -60,37 +61,50 @@ class PosterFullView extends ConsumerWidget {
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       fontStyle: FontStyle.italic, color: fg, height: 1.6)),
               const SizedBox(height: 32),
-              Container(width: 60, height: 1.5, color: fg.withAlpha(51)),
+              Container(width: 60, height: 1.5, color: sec.withAlpha(77)),
               const SizedBox(height: 20),
               if (poster.bookTitle != null)
                 Text(poster.bookTitle!,
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium
-                        ?.copyWith(color: fg.withAlpha(200))),
+                        ?.copyWith(color: sec)),
               if (poster.author != null) ...[
                 const SizedBox(height: 8),
                 Text(poster.author!,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium
-                        ?.copyWith(color: fg.withAlpha(153))),
+                        ?.copyWith(color: sec.withAlpha(200))),
               ],
               const SizedBox(height: 24),
               Text(l10n.appTitle,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                      color: fg.withAlpha(102), letterSpacing: 2)),
+                      color: sec.withAlpha(153), letterSpacing: 2)),
               const SizedBox(height: 16),
               Text(_label(l10n, poster.template),
                   style: Theme.of(context)
                       .textTheme
                       .labelSmall
-                      ?.copyWith(color: fg.withAlpha(77))),
+                      ?.copyWith(color: sec.withAlpha(102))),
             ],
           ),
         ),
       ),
     );
+  }
+
+  static (Color, Color, Color) _colors(PosterTemplate t) {
+    switch (t) {
+      case PosterTemplate.minimal:
+        return (Colors.white, const Color(0xFF1D1D1F), const Color(0xFF6E6E73));
+      case PosterTemplate.paper:
+        return (const Color(0xFFF4ECD8), const Color(0xFF3E2F1C), const Color(0xFF6D5E4A));
+      case PosterTemplate.dark:
+        return (const Color(0xFF1A1A2E), Colors.white, Colors.white70);
+      case PosterTemplate.cover:
+        return (const Color(0xFF2C3E50), const Color(0xFFECF0F1), const Color(0xFFBDC3C7));
+    }
   }
 
   String _label(AppLocalizations l10n, PosterTemplate t) {

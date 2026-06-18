@@ -93,8 +93,8 @@ final highlightsControllerProvider =
   return HighlightsController(repository);
 });
 
-/// 所有高亮 Provider
-final allHighlightsProvider = FutureProvider<List<HighlightData>>((ref) async {
+/// 所有高亮 Provider（使用 Stream 自动更新）
+final allHighlightsProvider = StreamProvider<List<HighlightData>>((ref) {
   final repository = ref.watch(highlightRepositoryProvider);
-  return repository.getAllHighlights();
+  return repository.watchAllHighlights();
 });

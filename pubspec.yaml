@@ -42,7 +42,6 @@ dependencies:
 
   # Sharing & Export
   share_plus: ^10.1.2
-  screenshot: ^3.0.0
   gal: ^2.3.0
 
   # Monetization

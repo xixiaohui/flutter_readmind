@@ -24,7 +24,6 @@
         "path",
         "path_provider",
         "pdfx",
-        "screenshot",
         "share_plus",
         "shared_preferences",
         "sqlite3_flutter_libs"
@@ -172,13 +171,6 @@
     {
       "name": "gal",
       "version": "2.3.2",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "screenshot",
-      "version": "3.0.0",
       "dependencies": [
         "flutter"
       ]

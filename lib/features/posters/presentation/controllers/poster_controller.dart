@@ -3,9 +3,11 @@
 
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:screenshot/screenshot.dart';
 import 'package:gal/gal.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path_provider/path_provider.dart';
@@ -50,12 +52,12 @@ class PosterState {
 /// 海报控制器
 class PosterController extends StateNotifier<PosterState> {
   final PosterRepository _repository;
+  String? _editingId;
 
   PosterController(this._repository) : super(const PosterState()) {
     _loadHistory();
   }
 
-  /// 从数据库加载海报历史
   Future<void> _loadHistory() async {
     state = state.copyWith(isLoading: true);
     try {
@@ -66,13 +68,13 @@ class PosterController extends StateNotifier<PosterState> {
     }
   }
 
-  /// 创建新海报
   void createPoster({
     required int highlightId,
     required String quoteText,
     String? bookTitle,
     String? author,
   }) {
+    _editingId = null;
     final poster = Poster.create(
       highlightId: highlightId,
       quoteText: quoteText,
@@ -81,14 +83,11 @@ class PosterController extends StateNotifier<PosterState> {
       template: state.selectedTemplate,
       ratio: state.selectedRatio,
     );
-
     state = state.copyWith(currentPoster: poster);
   }
 
-  /// 设置模板
   void setTemplate(PosterTemplate template) {
     state = state.copyWith(selectedTemplate: template);
-
     if (state.currentPoster != null) {
       state = state.copyWith(
         currentPoster: Poster.create(
@@ -103,50 +102,107 @@ class PosterController extends StateNotifier<PosterState> {
     }
   }
 
-  /// 设置比例
-  void setRatio(PosterRatio ratio) {
-    state = state.copyWith(selectedRatio: ratio);
+  void setBookTitle(String title) {
+    if (state.currentPoster == null) return;
+    state = state.copyWith(
+      currentPoster: Poster.create(
+        highlightId: state.currentPoster!.highlightId,
+        quoteText: state.currentPoster!.quoteText,
+        bookTitle: title,
+        author: state.currentPoster!.author,
+        template: state.currentPoster!.template,
+        ratio: state.currentPoster!.ratio,
+      ),
+    );
   }
 
-  /// 保存海报到数据库（可选传入 ScreenshotController 捕获图片）
-  Future<void> savePoster({ScreenshotController? screenshotController}) async {
+  void setAuthor(String author) {
+    if (state.currentPoster == null) return;
+    state = state.copyWith(
+      currentPoster: Poster.create(
+        highlightId: state.currentPoster!.highlightId,
+        quoteText: state.currentPoster!.quoteText,
+        bookTitle: state.currentPoster!.bookTitle,
+        author: author,
+        template: state.currentPoster!.template,
+        ratio: state.currentPoster!.ratio,
+      ),
+    );
+  }
+
+  void setRatio(PosterRatio ratio) {
+    state = state.copyWith(selectedRatio: ratio);
+    if (state.currentPoster != null) {
+      state = state.copyWith(
+        currentPoster: Poster.create(
+          highlightId: state.currentPoster!.highlightId,
+          quoteText: state.currentPoster!.quoteText,
+          bookTitle: state.currentPoster!.bookTitle,
+          author: state.currentPoster!.author,
+          template: state.currentPoster!.template,
+          ratio: ratio,
+        ),
+      );
+    }
+  }
+
+  void clearEditor() {
+    _editingId = null;
+    state = state.copyWith(currentPoster: null);
+  }
+
+  void editPoster(Poster poster) {
+    _editingId = poster.id;
+    state = state.copyWith(
+      currentPoster: poster,
+      selectedTemplate: poster.template,
+      selectedRatio: poster.ratio,
+    );
+  }
+
+  /// 保存海报到数据库（传入 repaintKey 捕获固定像素截图）
+  Future<void> savePoster({GlobalKey? repaintKey}) async {
     if (state.currentPoster == null) return;
 
     try {
       String? imagePath;
-      if (screenshotController != null) {
-        final imageBytes = await screenshotController.capture(
-          delay: const Duration(milliseconds: 100),
-          pixelRatio: 3.0,
-        );
-        if (imageBytes != null) {
-          imagePath = await _saveImageToFile(imageBytes);
+      if (repaintKey != null) {
+        final boundary = repaintKey.currentContext?.findRenderObject()
+            as RenderRepaintBoundary?;
+        if (boundary != null) {
+          try {
+            final image = await boundary.toImage(pixelRatio: 1.0);
+            final byteData =
+                await image.toByteData(format: ui.ImageByteFormat.png);
+            if (byteData != null) {
+              imagePath = await _saveBytes(byteData.buffer.asUint8List());
+            }
+            image.dispose();
+          } catch (_) {}
         }
+      }
+
+      if (_editingId != null) {
+        await _repository.deletePoster(_editingId!);
       }
 
       final poster = state.currentPoster!.copyWith(imagePath: imagePath);
       await _repository.savePoster(poster);
       await _loadHistory();
+    } finally {
+      _editingId = null;
       state = state.copyWith(currentPoster: null);
-    } catch (_) {
-      try {
-        await _repository.savePoster(state.currentPoster!);
-        await _loadHistory();
-        state = state.copyWith(currentPoster: null);
-      } catch (_) {}
     }
   }
 
-  /// 将图片字节保存到文件
-  Future<String> _saveImageToFile(Uint8List bytes) async {
+  Future<String> _saveBytes(Uint8List bytes) async {
     final dir = await getApplicationDocumentsDirectory();
-    final fileName = 'poster_${DateTime.now().millisecondsSinceEpoch}.png';
-    final file = File('${dir.path}/$fileName');
+    final name = 'poster_${DateTime.now().millisecondsSinceEpoch}.png';
+    final file = File('${dir.path}/$name');
     await file.writeAsBytes(bytes);
     return file.path;
   }
 
-  /// 分享海报
   Future<void> sharePoster(Poster poster) async {
     if (poster.imagePath != null) {
       final file = File(poster.imagePath!);
@@ -158,13 +214,11 @@ class PosterController extends StateNotifier<PosterState> {
         return;
       }
     }
-    // 无图片时分享文本
     await Share.share(
       '"${poster.quoteText}" — ${poster.bookTitle ?? "ReadMeet Quotes"}',
     );
   }
 
-  /// 保存海报到手机相册
   Future<void> saveToGallery(Poster poster) async {
     if (poster.imagePath != null) {
       final file = File(poster.imagePath!);
@@ -172,34 +226,27 @@ class PosterController extends StateNotifier<PosterState> {
         try {
           await Gal.putImage(file.path);
           return;
-        } catch (_) {
-          // gal 失败时回退到生成新图片
-        }
+        } catch (_) {}
       }
     }
-    // 无图片或 gal 失败：生成图片后保存
     try {
       final tempDir = await getApplicationDocumentsDirectory();
-      final fileName =
-          'poster_gallery_${DateTime.now().millisecondsSinceEpoch}.png';
-      final file = File('${tempDir.path}/$fileName');
-      // 如果已有 imagePath，复制文件
+      final name = 'poster_gallery_${DateTime.now().millisecondsSinceEpoch}.png';
+      final file = File('${tempDir.path}/$name');
       if (poster.imagePath != null) {
-        final srcFile = File(poster.imagePath!);
-        if (await srcFile.exists()) {
-          await srcFile.copy(file.path);
+        final src = File(poster.imagePath!);
+        if (await src.exists()) {
+          await src.copy(file.path);
         }
       }
       if (await file.exists()) {
         await Gal.putImage(file.path);
       }
     } catch (_) {
-      // 最后回退：使用系统分享
       await sharePoster(poster);
     }
   }
 
-  /// 从历史中删除海报
   Future<void> removeFromHistory(String id) async {
     try {
       await _repository.deletePoster(id);
@@ -212,9 +259,13 @@ class PosterController extends StateNotifier<PosterState> {
   }
 }
 
-/// Poster Controller Provider
 final posterControllerProvider =
     StateNotifierProvider<PosterController, PosterState>((ref) {
   final repository = ref.watch(posterRepositoryProvider);
   return PosterController(repository);
+});
+
+final allPostersStreamProvider = StreamProvider<List<Poster>>((ref) {
+  final repository = ref.watch(posterRepositoryProvider);
+  return repository.watchAllPosters();
 });

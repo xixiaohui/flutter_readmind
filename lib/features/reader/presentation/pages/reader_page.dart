@@ -7,10 +7,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../features/shared/domain/repositories/highlight_repository.dart';
 import '../../../../features/posters/presentation/controllers/poster_controller.dart';
+import '../../../../features/posters/presentation/pages/poster_editor_page.dart';
 import '../controllers/reader_controller.dart';
 import '../controllers/reader_highlight_controller.dart';
 import 'widgets/highlights_panel.dart';
-import 'widgets/poster_preview_sheet.dart';
 
 /// 阅读器页面
 class ReaderPage extends ConsumerStatefulWidget {
@@ -129,7 +129,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
           padding: const EdgeInsets.all(24.0),
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
-            child: _buildHighlightedText(chapter.content, state.fontSize),
+            child: _buildHighlightedText(
+              chapter.content, state.fontSize, state.currentChapter),
           ),
         ),
       ),
@@ -137,7 +138,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
   }
 
   /// 构建带高亮显示的文本
-  Widget _buildHighlightedText(String chapterContent, double fontSize) {
+  Widget _buildHighlightedText(
+      String chapterContent, double fontSize, int chapterIndex) {
     final highlightState = ref.watch(readerHighlightControllerProvider);
     final highlights = highlightState.highlights;
 
@@ -153,7 +155,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
       );
     }
 
-    final textSpan = _buildHighlightedTextSpan(chapterContent, highlights, fontSize);
+    final textSpan =
+        _buildHighlightedTextSpan(chapterContent, highlights, fontSize, chapterIndex);
     return SelectableText.rich(
       textSpan,
       contextMenuBuilder: (context, editableTextState) =>
@@ -161,18 +164,26 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     );
   }
 
-  /// 构建带高亮的 TextSpan
+  /// 构建带高亮的 TextSpan（仅显示当前章节的高亮）
   TextSpan _buildHighlightedTextSpan(
     String content,
     List<HighlightData> highlights,
     double fontSize,
+    int chapterIndex,
   ) {
     final style = Theme.of(context).textTheme.bodyLarge?.copyWith(
           fontSize: fontSize,
           height: 1.7,
         );
 
-    final relevantHighlights = highlights
+    // 仅显示当前章节的高亮（pageNumber 为章节索引）
+    final chapterHighlights = highlights.where((h) {
+      // 属于当前章节，或 pageNumber 为 null（旧数据兼容）
+      if (h.pageNumber == null) return true;
+      return h.pageNumber == chapterIndex;
+    });
+
+    final relevantHighlights = chapterHighlights
         .where((h) =>
             h.startOffset >= 0 &&
             h.endOffset <= content.length &&
@@ -331,6 +342,7 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
                       label: Text(l10n.createHighlight),
                       onPressed: () {
                     final content = ref.read(readerControllerProvider).content;
+                    final readerState = ref.read(readerControllerProvider);
                     if (content != null && _selectedText.isNotEmpty) {
                       ref
                           .read(readerHighlightControllerProvider.notifier)
@@ -339,6 +351,7 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
                             selectedText: _selectedText,
                             startOffset: _selectionStart,
                             endOffset: _selectionEnd,
+                            pageNumber: readerState.currentChapter,
                           );
                     }
                     Navigator.pop(ctx);
@@ -354,7 +367,7 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
 );
 }
 
-  /// 从选中文本生成海报
+  /// 从选中文本生成海报 → 打开编辑页面
   void _createPosterFromSelection(String selectedText) {
     final content = ref.read(readerControllerProvider).content;
     ref.read(posterControllerProvider.notifier).createPoster(
@@ -363,23 +376,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
           bookTitle: content?.title ?? widget.bookTitle,
           author: content?.author,
         );
-    _showPosterPreview();
-  }
-
-  /// 显示海报预览
-  void _showPosterPreview() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (ctx) => DraggableScrollableSheet(
-        initialChildSize: 0.7,
-        minChildSize: 0.3,
-        maxChildSize: 0.95,
-        expand: false,
-        builder: (ctx, scrollController) =>
-            PosterPreviewSheet(scrollController: scrollController),
-      ),
-    );
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => const PosterEditorPage()));
   }
 
   /// 显示高亮列表面板

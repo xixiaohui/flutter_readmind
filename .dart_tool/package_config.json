@@ -638,12 +638,6 @@
       "languageVersion": "2.17"
     },
     {
-      "name": "screenshot",
-      "rootUri": "file:///C:/Users/Administrator/AppData/Local/Pub/Cache/hosted/pub.flutter-io.cn/screenshot-3.0.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
       "name": "scrollable_positioned_list",
       "rootUri": "file:///C:/Users/Administrator/AppData/Local/Pub/Cache/hosted/pub.flutter-io.cn/scrollable_positioned_list-0.3.8",
       "packageUri": "lib/",

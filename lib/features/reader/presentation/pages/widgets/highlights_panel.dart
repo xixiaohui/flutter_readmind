@@ -7,9 +7,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../../l10n/app_localizations.dart';
 import '../../../../../../features/shared/domain/repositories/highlight_repository.dart';
 import '../../../../../../features/posters/presentation/controllers/poster_controller.dart';
+import '../../../../../../features/posters/presentation/pages/poster_editor_page.dart';
 import '../../controllers/reader_controller.dart';
 import '../../controllers/reader_highlight_controller.dart';
-import 'poster_preview_sheet.dart';
 
 /// 高亮列表面板
 class HighlightsPanel extends ConsumerWidget {
@@ -40,21 +40,27 @@ class HighlightsPanel extends ConsumerWidget {
                 TextButton.icon(
                   icon: const Icon(Icons.image_outlined, size: 18),
                   label: Text(l10n.posterAll),
-                  onPressed: () {
+                  onPressed: () async {
+                    final controller =
+                        ref.read(posterControllerProvider.notifier);
                     for (final h in highlights) {
-                      ref.read(posterControllerProvider.notifier).createPoster(
-                            highlightId: h.id,
-                            quoteText: h.selectedText,
-                            bookTitle: readerState.content?.title,
-                          );
+                      controller.createPoster(
+                        highlightId: h.id,
+                        quoteText: h.selectedText,
+                        bookTitle: readerState.content?.title,
+                      );
+                      // 直接保存到数据库（无截图控制器时保存纯文本海报）
+                      await controller.savePoster();
                     }
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                            l10n.postersCreatedCount(highlights.length)),
-                      ),
-                    );
+                    if (context.mounted) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                              l10n.postersCreatedCount(highlights.length)),
+                        ),
+                      );
+                    }
                   },
                 ),
             ],
@@ -166,7 +172,8 @@ class _HighlightListItem extends ConsumerWidget {
                           bookTitle: readerState.content?.title,
                         );
                     Navigator.pop(context);
-                    _showPosterPreview(context);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (_) => const PosterEditorPage()));
                   },
                 ),
                 IconButton(
@@ -190,18 +197,3 @@ class _HighlightListItem extends ConsumerWidget {
   }
 }
 
-/// 导航到海报预览
-void _showPosterPreview(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (ctx) => DraggableScrollableSheet(
-      initialChildSize: 0.7,
-      minChildSize: 0.3,
-      maxChildSize: 0.95,
-      expand: false,
-      builder: (ctx, scrollController) =>
-          PosterPreviewSheet(scrollController: scrollController),
-    ),
-  );
-}

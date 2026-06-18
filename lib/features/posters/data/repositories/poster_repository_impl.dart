@@ -16,6 +16,13 @@ class PosterRepositoryImpl implements PosterRepository {
 
   @override
   Future<int> savePoster(Poster poster) async {
+    // 去重：检查所有海报中是否已存在相同 quoteText（跨 highlightId）
+    final all = await _dao.getAllPosters();
+    final duplicate = all.where((e) => e.quoteText == poster.quoteText);
+    if (duplicate.isNotEmpty) {
+      return duplicate.first.id;
+    }
+
     return _dao.insertPoster(GeneratedPostersCompanion.insert(
       highlightId: poster.highlightId,
       quoteText: poster.quoteText,
@@ -31,6 +38,13 @@ class PosterRepositoryImpl implements PosterRepository {
   Future<List<Poster>> getAllPosters() async {
     final rows = await _dao.getAllPosters();
     return rows.map(_toPoster).toList();
+  }
+
+  @override
+  Stream<List<Poster>> watchAllPosters() {
+    return _dao.watchAllPosters().map(
+          (rows) => rows.map(_toPoster).toList(),
+        );
   }
 
   @override

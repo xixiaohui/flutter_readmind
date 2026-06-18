@@ -1,0 +1,20 @@
+Unhandled exception:
+By default, this package downloads a pre-compiled SQLite library.
+This failed (attepted to download https://github.com/simolus3/sqlite3.dart/releases/download/sqlite3-3.3.3/sqlite3.x64.windows.dll).
+For alternatives to downloading SQLite, see https://pub.dev/documentation/sqlite3/latest/topics/hook-topic.html
+Original cause: SocketException: 淇″彿鐏秴鏃舵椂闂村凡鍒?(OS Error: 淇″彿鐏秴鏃舵椂闂村凡鍒? errno = 121), address = github.com, port = 54713
+#0      _NativeSocket.startConnect (dart:io-patch/socket_patch.dart:817:35)
+#1      _RawSocket.startConnect (dart:io-patch/socket_patch.dart:2281:26)
+#2      RawSocket.startConnect (dart:io-patch/socket_patch.dart:41:23)
+#3      RawSecureSocket.startConnect (dart:io/secure_socket.dart:334:22)
+#4      SecureSocket.startConnect (dart:io/secure_socket.dart:85:28)
+#5      _ConnectionTarget.connect (dart:_http/http_impl.dart:2692:26)
+#6      _HttpClient._getConnection.connect (dart:_http/http_impl.dart:3197:12)
+#7      _HttpClient._getConnection (dart:_http/http_impl.dart:3202:12)
+#8      _HttpClient._openUrl (dart:_http/http_impl.dart:3021:12)
+#9      _HttpClient.getUrl (dart:_http/http_impl.dart:2868:48)
+#10     PrecompiledFromGithubAssets._fetchFromSource (package:sqlite3/src/hook/description.dart:257:36)
+<asynchronous suspension>
+#11     PrecompiledBinary.fetch.<anonymous closure>.<anonymous closure> (package:sqlite3/src/hook/description.dart:149:9)
+<asynchronous suspension>
+

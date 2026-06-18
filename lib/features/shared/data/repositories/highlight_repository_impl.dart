@@ -41,12 +41,20 @@ class HighlightRepositoryImpl implements HighlightRepository {
       highlightColor: Value(highlight.highlightColor),
       startOffset: highlight.startOffset,
       endOffset: highlight.endOffset,
+      pageNumber: Value(highlight.pageNumber),
     ));
   }
 
   @override
   Future<int> deleteHighlight(int id) async {
     return _dao.deleteHighlight(id);
+  }
+
+  @override
+  Stream<List<HighlightData>> watchAllHighlights() {
+    return _dao.watchAllHighlights().map(
+          (highlights) => highlights.map(_toHighlightData).toList(),
+        );
   }
 
   @override
@@ -66,6 +74,7 @@ class HighlightRepositoryImpl implements HighlightRepository {
       highlightColor: highlight.highlightColor,
       startOffset: highlight.startOffset,
       endOffset: highlight.endOffset,
+      pageNumber: highlight.pageNumber,
     );
   }
 }

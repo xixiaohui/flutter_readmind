@@ -54,6 +54,7 @@ class _PosterEditorPageState extends ConsumerState<PosterEditorPage> {
     final fg = colors.$2;
     final sec = colors.$3;
     final ratio = _ar(poster.ratio);
+    final fontFamily = state.fontFamily; // 来自阅读设置的字体
 
     return Scaffold(
       backgroundColor: bg,
@@ -104,9 +105,8 @@ class _PosterEditorPageState extends ConsumerState<PosterEditorPage> {
                                 child: Center(
                                   child: Text('"${poster.quoteText}"',
                                       textAlign: TextAlign.center,
-                                      maxLines: 10,
-                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
+                                        fontFamily: (fontFamily != null && fontFamily.isNotEmpty) ? fontFamily : null,
                                         fontStyle: FontStyle.italic,
                                         color: fg,
                                         fontSize: 48,
@@ -139,9 +139,8 @@ class _PosterEditorPageState extends ConsumerState<PosterEditorPage> {
                                   }
                                   return Text('— $text',
                                       textAlign: TextAlign.center,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
+                                          fontFamily: (fontFamily != null && fontFamily.isNotEmpty) ? fontFamily : null,
                                           fontSize: 32,
                                           color: sec,
                                           fontWeight: FontWeight.w400,

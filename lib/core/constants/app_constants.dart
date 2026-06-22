@@ -2,7 +2,7 @@
 // 应用常量定义
 
 /// 应用名称
-const String appName = 'ReadMeet Quotes';
+const String appName = 'ReadMind';
 
 /// 应用版本
 const String appVersion = '1.0.0';

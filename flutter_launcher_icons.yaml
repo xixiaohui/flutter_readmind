@@ -1,0 +1,7 @@
+flutter_icons:
+  image_path: assets/logo.png
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  adaptive_icon_foreground: assets/logo.png
+  adaptive_icon_background: "#FFFFFF"

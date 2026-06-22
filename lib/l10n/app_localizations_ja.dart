@@ -9,7 +9,7 @@ class AppLocalizationsJa extends AppLocalizations {
   AppLocalizationsJa([String locale = 'ja']) : super(locale);
 
   @override
-  String get appTitle => 'ReadMeet Quotes';
+  String get appTitle => 'ReadMind';
 
   @override
   String get library => 'ライブラリ';
@@ -188,4 +188,46 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get webDatabaseUnavailable => 'Web版ではデータベースを利用できません。\nすべての機能はネイティブアプリでご利用ください。';
+
+  @override
+  String get readingSettings => '読書設定';
+
+  @override
+  String get fontFamily => 'フォント';
+
+  @override
+  String get serif => 'セリフ';
+
+  @override
+  String get sansSerif => 'サンセリフ';
+
+  @override
+  String get monospace => '等幅';
+
+  @override
+  String get lineHeight => '行間';
+
+  @override
+  String get readingMode => '読書モード';
+
+  @override
+  String get scroll => 'スクロール';
+
+  @override
+  String get pagination => 'ページ';
+
+  @override
+  String get searchBook => '本を検索';
+
+  @override
+  String get searchHint => '内容を検索...';
+
+  @override
+  String get noSearchResults => '検索結果なし';
+
+  @override
+  String get fontSize => 'フォントサイズ';
+
+  @override
+  String get wenkai => '文楷';
 }

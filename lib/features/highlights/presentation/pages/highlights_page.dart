@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/reader_settings_controller.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../reader/domain/entities/book_content.dart';
 import '../controllers/highlights_controller.dart';
 import '../../../../core/di/injection.dart';
-import '../../../../features/shared/domain/repositories/book_repository.dart';
 import '../../../../features/shared/domain/repositories/highlight_repository.dart';
 import '../../../../features/posters/presentation/controllers/poster_controller.dart';
 import '../../../../features/posters/presentation/pages/poster_editor_page.dart';
@@ -111,6 +112,8 @@ class _HighlightCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final settings = ref.watch(readerSettingsControllerProvider);
+    final fontFamily = _fontFamilyString(settings.fontFamily);
 
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -130,7 +133,9 @@ class _HighlightCard extends ConsumerWidget {
               ),
               child: Text(
                 highlight.selectedText,
-                style: Theme.of(context).textTheme.bodyLarge,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                  fontFamily: fontFamily.isNotEmpty ? fontFamily : null,
+                ),
               ),
             ),
             const SizedBox(height: 8),
@@ -155,6 +160,7 @@ class _HighlightCard extends ConsumerWidget {
                           bookTitle: book?.title,
                           author: book?.author,
                         );
+                    ref.read(posterControllerProvider.notifier).setFontFamily(fontFamily);
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (_) => const PosterEditorPage()));
                   },
@@ -211,6 +217,15 @@ class _HighlightCard extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  static String _fontFamilyString(ReaderFontFamily family) {
+    switch (family) {
+      case ReaderFontFamily.wenkai: return 'LXGWWenKai';
+      case ReaderFontFamily.serif: return 'Serif';
+      case ReaderFontFamily.monospace: return 'monospace';
+      case ReaderFontFamily.sansSerif: return '';
+    }
   }
 
   /// 获取高亮颜色

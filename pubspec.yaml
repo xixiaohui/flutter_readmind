@@ -1,5 +1,5 @@
 name: flutter_readmind
-description: ReadMeet Quotes - Read. Highlight. Share.
+description: ReadMind - Read. Highlight. Share.
 publish_to: 'none'
 version: 2026.06.18+1781771462
 
@@ -61,6 +61,9 @@ dev_dependencies:
   build_runner: ^2.4.6
   drift_dev: ^2.18.0
 
+  # App Icon Generator
+  flutter_launcher_icons: ^0.9.3
+
 flutter:
   uses-material-design: true
 
@@ -68,6 +71,12 @@ flutter:
   assets:
     - assets/images/
     - assets/i18n/
+
+  # Fonts
+  fonts:
+    - family: LXGWWenKai
+      fonts:
+        - asset: assets/fonts/LXGWWenKai-Regular.ttf
 
   # Localizations
   generate: true

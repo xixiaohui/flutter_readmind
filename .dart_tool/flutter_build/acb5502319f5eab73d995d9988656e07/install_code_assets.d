@@ -1,0 +1,1 @@
+ E:\\workspace\\claw\\flutter_readmind\\.dart_tool\\flutter_build\\acb5502319f5eab73d995d9988656e07\\native_assets.json E:\\workspace\\claw\\flutter_readmind\\build\\app\\intermediates\\flutter\\debug\\native_assets\\jniLibs\\lib\\arm64-v8a\\libsqlite3.so:  E:\\workspace\\claw\\flutter_readmind\\.dart_tool\\hooks_runner\\shared\\sqlite3\\build\\download-15f08549\\libsqlite3.so

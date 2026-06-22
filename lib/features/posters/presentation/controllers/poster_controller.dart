@@ -23,6 +23,7 @@ class PosterState {
   final PosterRatio selectedRatio;
   final List<Poster> history;
   final bool isLoading;
+  final String? fontFamily;
 
   const PosterState({
     this.currentPoster,
@@ -30,6 +31,7 @@ class PosterState {
     this.selectedRatio = PosterRatio.square,
     this.history = const [],
     this.isLoading = false,
+    this.fontFamily,
   });
 
   PosterState copyWith({
@@ -38,6 +40,8 @@ class PosterState {
     PosterRatio? selectedRatio,
     List<Poster>? history,
     bool? isLoading,
+    String? fontFamily,
+    bool clearFontFamily = false,
   }) {
     return PosterState(
       currentPoster: currentPoster ?? this.currentPoster,
@@ -45,6 +49,7 @@ class PosterState {
       selectedRatio: selectedRatio ?? this.selectedRatio,
       history: history ?? this.history,
       isLoading: isLoading ?? this.isLoading,
+      fontFamily: clearFontFamily ? null : (fontFamily ?? this.fontFamily),
     );
   }
 }
@@ -102,6 +107,10 @@ class PosterController extends StateNotifier<PosterState> {
     }
   }
 
+  void setFontFamily(String family) {
+    state = state.copyWith(fontFamily: family);
+  }
+
   void setBookTitle(String title) {
     if (state.currentPoster == null) return;
     state = state.copyWith(
@@ -148,7 +157,7 @@ class PosterController extends StateNotifier<PosterState> {
 
   void clearEditor() {
     _editingId = null;
-    state = state.copyWith(currentPoster: null);
+    state = state.copyWith(currentPoster: null, clearFontFamily: true);
   }
 
   void editPoster(Poster poster) {
@@ -215,7 +224,7 @@ class PosterController extends StateNotifier<PosterState> {
       }
     }
     await Share.share(
-      '"${poster.quoteText}" — ${poster.bookTitle ?? "ReadMeet Quotes"}',
+      '"${poster.quoteText}" — ${poster.bookTitle ?? "ReadMind"}',
     );
   }
 

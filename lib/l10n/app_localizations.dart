@@ -100,7 +100,7 @@ abstract class AppLocalizations {
   /// No description provided for @appTitle.
   ///
   /// In en, this message translates to:
-  /// **'ReadMeet Quotes'**
+  /// **'ReadMind'**
   String get appTitle;
 
   /// No description provided for @library.
@@ -456,6 +456,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Database not available on Web.\nPlease use native app for full features.'**
   String get webDatabaseUnavailable;
+
+  /// No description provided for @readingSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Settings'**
+  String get readingSettings;
+
+  /// No description provided for @fontFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Font'**
+  String get fontFamily;
+
+  /// No description provided for @serif.
+  ///
+  /// In en, this message translates to:
+  /// **'Serif'**
+  String get serif;
+
+  /// No description provided for @sansSerif.
+  ///
+  /// In en, this message translates to:
+  /// **'Sans Serif'**
+  String get sansSerif;
+
+  /// No description provided for @monospace.
+  ///
+  /// In en, this message translates to:
+  /// **'Monospace'**
+  String get monospace;
+
+  /// No description provided for @lineHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Line Height'**
+  String get lineHeight;
+
+  /// No description provided for @readingMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Reading Mode'**
+  String get readingMode;
+
+  /// No description provided for @scroll.
+  ///
+  /// In en, this message translates to:
+  /// **'Scroll'**
+  String get scroll;
+
+  /// No description provided for @pagination.
+  ///
+  /// In en, this message translates to:
+  /// **'Pages'**
+  String get pagination;
+
+  /// No description provided for @searchBook.
+  ///
+  /// In en, this message translates to:
+  /// **'Search Book'**
+  String get searchBook;
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search content...'**
+  String get searchHint;
+
+  /// No description provided for @noSearchResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No results found'**
+  String get noSearchResults;
+
+  /// No description provided for @fontSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Font Size'**
+  String get fontSize;
+
+  /// No description provided for @wenkai.
+  ///
+  /// In en, this message translates to:
+  /// **'WenKai'**
+  String get wenkai;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

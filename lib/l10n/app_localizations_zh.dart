@@ -9,7 +9,7 @@ class AppLocalizationsZh extends AppLocalizations {
   AppLocalizationsZh([String locale = 'zh']) : super(locale);
 
   @override
-  String get appTitle => 'ReadMeet Quotes';
+  String get appTitle => '墨见';
 
   @override
   String get library => '书架';
@@ -188,4 +188,46 @@ class AppLocalizationsZh extends AppLocalizations {
 
   @override
   String get webDatabaseUnavailable => 'Web 版暂不支持数据库。\n请使用原生应用获取完整功能。';
+
+  @override
+  String get readingSettings => '阅读设置';
+
+  @override
+  String get fontFamily => '字体';
+
+  @override
+  String get serif => '衬线';
+
+  @override
+  String get sansSerif => '无衬线';
+
+  @override
+  String get monospace => '等宽';
+
+  @override
+  String get lineHeight => '行间距';
+
+  @override
+  String get readingMode => '阅读模式';
+
+  @override
+  String get scroll => '滚动';
+
+  @override
+  String get pagination => '翻页';
+
+  @override
+  String get searchBook => '搜索书籍';
+
+  @override
+  String get searchHint => '搜索内容...';
+
+  @override
+  String get noSearchResults => '无搜索结果';
+
+  @override
+  String get fontSize => '字号';
+
+  @override
+  String get wenkai => '文楷';
 }

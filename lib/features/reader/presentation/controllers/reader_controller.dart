@@ -1,5 +1,6 @@
 // reader_controller.dart
 // Reader Controller (Riverpod)
+// 显示设置（字体、行距、阅读模式）已移至全局 ReaderSettingsController
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,14 +9,16 @@ import '../../domain/entities/book_content.dart';
 import '../../domain/entities/reading_position.dart';
 import '../../domain/repositories/reader_repository.dart';
 
-/// 阅读器状态
+/// 阅读器状态（仅书籍内容和阅读位置，不含显示设置）
 class ReaderState {
   final bool isLoading;
   final BookContent? content;
   final ReadingPosition? position;
   final int currentChapter;
   final int currentPage;
-  final double fontSize;
+  final String? searchQuery;
+  final List<SearchMatch> searchResults;
+  final int? scrollToOffset;
   final String? errorMessage;
 
   const ReaderState({
@@ -24,7 +27,9 @@ class ReaderState {
     this.position,
     this.currentChapter = 0,
     this.currentPage = 0,
-    this.fontSize = 18.0,
+    this.searchQuery,
+    this.searchResults = const [],
+    this.scrollToOffset,
     this.errorMessage,
   });
 
@@ -34,8 +39,12 @@ class ReaderState {
     ReadingPosition? position,
     int? currentChapter,
     int? currentPage,
-    double? fontSize,
+    String? searchQuery,
+    List<SearchMatch>? searchResults,
+    int? scrollToOffset,
     String? errorMessage,
+    bool clearSearch = false,
+    bool clearScrollTo = false,
   }) {
     return ReaderState(
       isLoading: isLoading ?? this.isLoading,
@@ -43,7 +52,9 @@ class ReaderState {
       position: position ?? this.position,
       currentChapter: currentChapter ?? this.currentChapter,
       currentPage: currentPage ?? this.currentPage,
-      fontSize: fontSize ?? this.fontSize,
+      searchQuery: clearSearch ? null : (searchQuery ?? this.searchQuery),
+      searchResults: clearSearch ? [] : (searchResults ?? this.searchResults),
+      scrollToOffset: clearScrollTo ? null : (scrollToOffset ?? this.scrollToOffset),
       errorMessage: errorMessage,
     );
   }
@@ -62,7 +73,6 @@ class ReaderController extends StateNotifier<ReaderState> {
     try {
       final content = await _repository.getBookContent(filePath, fileType, bookId);
 
-      // 尝试加载阅读位置，失败则使用默认位置
       ReadingPosition position;
       try {
         position = await _repository.getReadingPosition(content.bookId);
@@ -85,9 +95,10 @@ class ReaderController extends StateNotifier<ReaderState> {
     }
   }
 
-  /// 设置当前章节
+  /// 设置当前章节（自动保存进度）
   void setChapter(int chapterIndex) {
-    state = state.copyWith(currentChapter: chapterIndex);
+    state = state.copyWith(currentChapter: chapterIndex, clearScrollTo: true);
+    savePosition();
   }
 
   /// 设置当前页码
@@ -95,9 +106,65 @@ class ReaderController extends StateNotifier<ReaderState> {
     state = state.copyWith(currentPage: pageNumber);
   }
 
-  /// 调整字体大小
-  void setFontSize(double fontSize) {
-    state = state.copyWith(fontSize: fontSize);
+  /// 全文搜索
+  void search(String query) {
+    if (query.isEmpty || state.content == null) {
+      state = state.copyWith(clearSearch: true);
+      return;
+    }
+
+    final results = <SearchMatch>[];
+    final chapters = state.content!.chapters;
+    final lowerQuery = query.toLowerCase();
+
+    for (final chapter in chapters) {
+      final lowerContent = chapter.content.toLowerCase();
+      int searchFrom = 0;
+      while (true) {
+        final index = lowerContent.indexOf(lowerQuery, searchFrom);
+        if (index == -1) break;
+
+        final contextStart = (index - 30).clamp(0, chapter.content.length);
+        final contextEnd = (index + query.length + 30).clamp(0, chapter.content.length);
+        final contextText = chapter.content.substring(contextStart, contextEnd);
+
+        results.add(SearchMatch(
+          chapterIndex: chapter.index,
+          chapterTitle: chapter.title,
+          startOffset: index,
+          contextText: (contextStart > 0 ? '...' : '') +
+              contextText +
+              (contextEnd < chapter.content.length ? '...' : ''),
+        ));
+
+        searchFrom = index + query.length;
+        if (results.length >= 50) break;
+      }
+      if (results.length >= 50) break;
+    }
+
+    state = state.copyWith(
+      searchQuery: query,
+      searchResults: results,
+    );
+  }
+
+  /// 清空搜索
+  void clearSearch() {
+    state = state.copyWith(clearSearch: true);
+  }
+
+  /// 跳转到搜索结果
+  void navigateToSearchResult(SearchMatch match) {
+    state = state.copyWith(
+      currentChapter: match.chapterIndex,
+      scrollToOffset: match.startOffset,
+    );
+  }
+
+  /// 清除滚动偏移
+  void clearScrollToOffset() {
+    state = state.copyWith(clearScrollTo: true);
   }
 
   /// 保存阅读位置

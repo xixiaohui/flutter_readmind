@@ -3,7 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/reader_settings_controller.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../../reader/domain/entities/book_content.dart';
 import '../../domain/entities/poster.dart';
 import '../controllers/poster_controller.dart';
 import 'poster_editor_page.dart';
@@ -115,9 +117,8 @@ class _PosterTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final text = poster.quoteText.length > 20
-        ? '${poster.quoteText.substring(0, 20)}...'
-        : poster.quoteText;
+    final settings = ref.watch(readerSettingsControllerProvider);
+    final fontFamily = _fontFamilyStr(settings.fontFamily);
 
     void confirmDelete(BuildContext context, WidgetRef ref) {
       showDialog(
@@ -164,14 +165,14 @@ class _PosterTile extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ── 文字展示（最多20字符） ──
-              Text(text,
-                  maxLines: 1,
+              // ── 完整引用文字展示 ──
+              Text(poster.quoteText,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context)
                       .textTheme
                       .bodyMedium
-                      ?.copyWith(fontWeight: FontWeight.w500)),
+                      ?.copyWith(fontWeight: FontWeight.w500, fontFamily: fontFamily.isNotEmpty ? fontFamily : null)),
               const SizedBox(height: 4),
               Text(_label(l10n, poster.template),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
@@ -217,6 +218,15 @@ class _PosterTile extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  static String _fontFamilyStr(ReaderFontFamily family) {
+    switch (family) {
+      case ReaderFontFamily.wenkai: return 'LXGWWenKai';
+      case ReaderFontFamily.serif: return 'Serif';
+      case ReaderFontFamily.monospace: return 'monospace';
+      case ReaderFontFamily.sansSerif: return '';
+    }
   }
 }
 

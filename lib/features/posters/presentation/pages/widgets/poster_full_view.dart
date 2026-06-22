@@ -4,7 +4,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../core/theme/reader_settings_controller.dart';
 import '../../../../../l10n/app_localizations.dart';
+import '../../../../reader/domain/entities/book_content.dart';
 import '../../../domain/entities/poster.dart';
 import '../../controllers/poster_controller.dart';
 
@@ -20,6 +22,10 @@ class PosterFullView extends ConsumerWidget {
     final bg = colors.$1;
     final fg = colors.$2;
     final sec = colors.$3;
+    final posterState = ref.watch(posterControllerProvider);
+    final globalSettings = ref.watch(readerSettingsControllerProvider);
+    // 优先海报专属字体，回退到全局阅读设置
+    final fontFamily = posterState.fontFamily ?? _fontFamilyToString(globalSettings.fontFamily);
 
     return Scaffold(
       backgroundColor: bg,
@@ -60,6 +66,7 @@ class PosterFullView extends ConsumerWidget {
               Text('"${poster.quoteText}"',
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontFamily: fontFamily.isNotEmpty ? fontFamily : null,
                       fontStyle: FontStyle.italic,
                       color: fg,
                       height: 1.55,
@@ -79,9 +86,8 @@ class PosterFullView extends ConsumerWidget {
                 if (text.isEmpty) return const SizedBox.shrink();
                 return Text('— $text',
                     textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontFamily: fontFamily.isNotEmpty ? fontFamily : null,
                         color: sec,
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.italic));
@@ -98,6 +104,15 @@ class PosterFullView extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  static String _fontFamilyToString(ReaderFontFamily family) {
+    switch (family) {
+      case ReaderFontFamily.wenkai: return 'LXGWWenKai';
+      case ReaderFontFamily.serif: return 'Serif';
+      case ReaderFontFamily.monospace: return 'monospace';
+      case ReaderFontFamily.sansSerif: return '';
+    }
   }
 
   static (Color, Color, Color) _colors(PosterTemplate t) {

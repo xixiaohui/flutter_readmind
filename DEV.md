@@ -10,7 +10,7 @@ Version: 1.0
 
 # Product Definition
 
-ReadMeet Quotes 是一款专为深度阅读者打造的阅读摘录与海报分享应用。
+ReadMeet Quotes｜墨光 是一款专为深度阅读者打造的阅读摘录与海报分享应用。
 
 核心流程：
 

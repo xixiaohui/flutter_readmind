@@ -7,6 +7,29 @@ enum ReadingMode {
   scroll,
 }
 
+/// 字体家族
+enum ReaderFontFamily {
+  sansSerif,
+  serif,
+  monospace,
+  wenkai,
+}
+
+/// 搜索结果匹配项
+class SearchMatch {
+  final int chapterIndex;
+  final String chapterTitle;
+  final int startOffset;
+  final String contextText;
+
+  const SearchMatch({
+    required this.chapterIndex,
+    required this.chapterTitle,
+    required this.startOffset,
+    required this.contextText,
+  });
+}
+
 /// 书籍内容实体
 class BookContent {
   final int bookId;

@@ -12,7 +12,7 @@ class PurchaseController extends StateNotifier<PurchaseState> {
       products: const [
         ProductInfo(
           id: 'readmeet_quotes_pro',
-          name: 'ReadMeet Quotes Pro',
+          name: 'ReadMind Pro',
           description:
               'Unlock unlimited books, highlights, and posters.',
           price: '4.99',

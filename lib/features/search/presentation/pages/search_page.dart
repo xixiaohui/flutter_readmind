@@ -3,8 +3,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../l10n/app_localizations.dart';
+import '../../../../core/di/injection.dart';
 import '../../domain/entities/search_result.dart';
 import '../controllers/search_controller.dart';
 
@@ -125,13 +127,13 @@ class _SearchPageState extends ConsumerState<SearchPage> {
 }
 
 /// 搜索结果卡片
-class _SearchResultCard extends StatelessWidget {
+class _SearchResultCard extends ConsumerWidget {
   final SearchResult result;
 
   const _SearchResultCard({required this.result});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Card(
       margin: const EdgeInsets.only(bottom: 8),
       child: ListTile(
@@ -145,8 +147,37 @@ class _SearchResultCard extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
         ),
         subtitle: Text(result.snippet),
+        onTap: () => _navigateToResult(context, ref),
       ),
     );
+  }
+
+  Future<void> _navigateToResult(BuildContext context, WidgetRef ref) async {
+    try {
+      int? bookId;
+
+      if (result.type == SearchResultType.book) {
+        bookId = int.tryParse(result.id);
+      } else if (result.type == SearchResultType.highlight && result.subtitle != null) {
+        // subtitle 格式: "Book #123"
+        final match = RegExp(r'Book #(\d+)').firstMatch(result.subtitle!);
+        bookId = match != null ? int.tryParse(match.group(1)!) : null;
+      }
+
+      if (bookId == null || !context.mounted) return;
+
+      final book = await ref.read(bookRepositoryProvider).getBookById(bookId);
+      if (book == null || !context.mounted) return;
+
+      context.push('/reader', extra: {
+        'filePath': book.filePath,
+        'fileType': book.fileType,
+        'bookTitle': book.title,
+        'bookId': book.id.toString(),
+      });
+    } catch (_) {
+      // 静默失败，书籍可能已被删除
+    }
   }
 
   IconData _getIcon(SearchResultType type) {

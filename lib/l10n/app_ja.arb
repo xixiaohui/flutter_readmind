@@ -1,6 +1,6 @@
 {
   "@@locale": "ja",
-  "appTitle": "ReadMeet Quotes",
+  "appTitle": "ReadMind",
   "library": "ライブラリ",
   "highlights": "ハイライト",
   "posters": "ポスター",
@@ -59,5 +59,19 @@
   "upgradeToPro": "プロ版にアップグレード",
   "search": "検索",
   "settings": "設定",
-  "webDatabaseUnavailable": "Web版ではデータベースを利用できません。\nすべての機能はネイティブアプリでご利用ください。"
+  "webDatabaseUnavailable": "Web版ではデータベースを利用できません。\nすべての機能はネイティブアプリでご利用ください。",
+  "readingSettings": "読書設定",
+  "fontFamily": "フォント",
+  "serif": "セリフ",
+  "sansSerif": "サンセリフ",
+  "monospace": "等幅",
+  "lineHeight": "行間",
+  "readingMode": "読書モード",
+  "scroll": "スクロール",
+  "pagination": "ページ",
+  "searchBook": "本を検索",
+  "searchHint": "内容を検索...",
+  "noSearchResults": "検索結果なし",
+  "fontSize": "フォントサイズ",
+  "wenkai": "文楷"
 }

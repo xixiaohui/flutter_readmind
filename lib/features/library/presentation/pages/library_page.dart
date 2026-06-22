@@ -96,7 +96,7 @@ class _BookGrid extends ConsumerWidget {
       padding: const EdgeInsets.all(16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 0.7,
+        childAspectRatio: 2 / 3,  // 2:3 封面比例，符合 UI_DESIGN
         crossAxisSpacing: 12,
         mainAxisSpacing: 12,
       ),
@@ -108,7 +108,7 @@ class _BookGrid extends ConsumerWidget {
   }
 }
 
-/// 书籍卡片
+/// 书籍卡片 — 经典书架风格
 class _BookCard extends ConsumerWidget {
   final BookData book;
   const _BookCard({required this.book});
@@ -116,6 +116,8 @@ class _BookCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = AppLocalizations.of(context)!;
+    final colors = _coverColors(book.fileType);
+    final theme = Theme.of(context);
 
     return GestureDetector(
       onTap: () {
@@ -127,42 +129,113 @@ class _BookCard extends ConsumerWidget {
         });
       },
       onLongPress: () => _showDeleteDialog(context, ref, l10n),
-      child: Card(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18),
+          color: theme.colorScheme.surface,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withAlpha(theme.brightness == Brightness.dark ? 30 : 12),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // ── 封面区 ──
             Expanded(
+              flex: 72,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceContainerHighest,
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(20)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [colors.$1, colors.$2],
+                  ),
                 ),
-                alignment: Alignment.center,
-                child: Icon(_getFileIcon(book.fileType), size: 48,
-                    color: Theme.of(context).colorScheme.secondary),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    // 背景图标（水印效果）
+                    Positioned(
+                      right: -16,
+                      bottom: -16,
+                      child: Icon(
+                        _getFileIcon(book.fileType),
+                        size: 96,
+                        color: colors.$3.withAlpha(40),
+                      ),
+                    ),
+                    // 主图标
+                    Center(
+                      child: Icon(
+                        _getFileIcon(book.fileType),
+                        size: 44,
+                        color: colors.$3.withAlpha(140),
+                      ),
+                    ),
+                    // 文件类型标签
+                    Positioned(
+                      left: 10,
+                      bottom: 10,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: colors.$3.withAlpha(30),
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Text(
+                          book.fileType.toUpperCase(),
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w600,
+                            color: colors.$3.withAlpha(160),
+                            letterSpacing: 0.8,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(book.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(fontWeight: FontWeight.w600)),
-                  if (book.author != null) ...[
-                    const SizedBox(height: 4),
-                    Text(book.author!,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall),
+            // ── 信息区 ──
+            Expanded(
+              flex: 28,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // 书名
+                    Expanded(
+                      child: Text(book.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: theme.textTheme.bodyMedium?.copyWith(
+                              fontWeight: FontWeight.w600,
+                              height: 1.35)),
+                    ),
+                    // 作者 + 进度
+                    Row(
+                      children: [
+                        if (book.author != null)
+                          Expanded(
+                            child: Text(book.author!,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                    color: theme.colorScheme.onSurface
+                                        .withAlpha(140))),
+                          ),
+                      ],
+                    ),
                   ],
-                ],
+                ),
               ),
             ),
           ],
@@ -204,6 +277,36 @@ class _BookCard extends ConsumerWidget {
       case 'txt': return Icons.text_snippet;
       case 'pdf': return Icons.picture_as_pdf;
       default: return Icons.book;
+    }
+  }
+
+  /// 封面渐变色：(topLeft, bottomRight, accent)
+  static (Color, Color, Color) _coverColors(String fileType) {
+    switch (fileType) {
+      case 'epub':
+        return (
+          const Color(0xFFE8E0F0),
+          const Color(0xFFD6CCE6),
+          const Color(0xFF6B4E9B),
+        );
+      case 'pdf':
+        return (
+          const Color(0xFFFBE0DD),
+          const Color(0xFFF3CBC6),
+          const Color(0xFFC2554A),
+        );
+      case 'txt':
+        return (
+          const Color(0xFFDFEDE8),
+          const Color(0xFFCDDDD5),
+          const Color(0xFF4A7C64),
+        );
+      default:
+        return (
+          const Color(0xFFE8E8ED),
+          const Color(0xFFD6D6DE),
+          const Color(0xFF636380),
+        );
     }
   }
 }

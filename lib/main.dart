@@ -16,7 +16,7 @@ void main() {
   runApp(const ProviderScope(child: ReadMeetApp()));
 }
 
-/// ReadMeet 主应用
+/// ReadMind 主应用
 class ReadMeetApp extends ConsumerWidget {
   const ReadMeetApp({super.key});
 
@@ -26,7 +26,7 @@ class ReadMeetApp extends ConsumerWidget {
     final locale = ref.watch(localeControllerProvider);
 
     return MaterialApp.router(
-      title: 'ReadMeet Quotes',
+      title: 'ReadMind',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: _mapToThemeMode(themeMode),

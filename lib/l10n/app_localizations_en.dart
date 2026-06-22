@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appTitle => 'ReadMeet Quotes';
+  String get appTitle => 'ReadMind';
 
   @override
   String get library => 'Library';
@@ -188,4 +188,46 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get webDatabaseUnavailable => 'Database not available on Web.\nPlease use native app for full features.';
+
+  @override
+  String get readingSettings => 'Reading Settings';
+
+  @override
+  String get fontFamily => 'Font';
+
+  @override
+  String get serif => 'Serif';
+
+  @override
+  String get sansSerif => 'Sans Serif';
+
+  @override
+  String get monospace => 'Monospace';
+
+  @override
+  String get lineHeight => 'Line Height';
+
+  @override
+  String get readingMode => 'Reading Mode';
+
+  @override
+  String get scroll => 'Scroll';
+
+  @override
+  String get pagination => 'Pages';
+
+  @override
+  String get searchBook => 'Search Book';
+
+  @override
+  String get searchHint => 'Search content...';
+
+  @override
+  String get noSearchResults => 'No results found';
+
+  @override
+  String get fontSize => 'Font Size';
+
+  @override
+  String get wenkai => 'WenKai';
 }

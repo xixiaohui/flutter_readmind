@@ -19,13 +19,13 @@ abstract class ShareService {
 class ShareServiceImpl implements ShareService {
   @override
   Future<void> shareText(String text, {String? subject}) async {
-    await Share.share(text, subject: subject ?? 'ReadMeet Quotes');
+    await Share.share(text, subject: subject ?? 'ReadMind');
   }
 
   @override
   String exportHighlightsAsText(Map<String, List<String>> highlightsByBook) {
     final buffer = StringBuffer();
-    buffer.writeln('=== ReadMeet Quotes - Highlights ===');
+    buffer.writeln('=== ReadMind - Highlights ===');
     buffer.writeln();
     buffer.writeln('Generated: ${DateTime.now()}');
     buffer.writeln();
@@ -45,7 +45,7 @@ class ShareServiceImpl implements ShareService {
   @override
   String exportNotesAsText(Map<String, List<String>> notesByHighlight) {
     final buffer = StringBuffer();
-    buffer.writeln('=== ReadMeet Quotes - Notes ===');
+    buffer.writeln('=== ReadMind - Notes ===');
     buffer.writeln();
     buffer.writeln('Generated: ${DateTime.now()}');
     buffer.writeln();
@@ -86,7 +86,7 @@ String createShareText({
   }
 
   buffer.writeln();
-  buffer.writeln('Shared via ReadMeet Quotes');
+  buffer.writeln('Shared via ReadMind');
 
   return buffer.toString();
 }

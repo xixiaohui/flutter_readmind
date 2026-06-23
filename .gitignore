@@ -80,3 +80,7 @@
 ./build_output/*
 ./build_output/**/*
 ./build_output
+
+./.dart_tool/
+./.dart_tool/**/*
+./.dart_tool

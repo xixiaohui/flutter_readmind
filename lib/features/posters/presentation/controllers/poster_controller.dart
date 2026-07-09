@@ -216,16 +216,16 @@ class PosterController extends StateNotifier<PosterState> {
     if (poster.imagePath != null) {
       final file = File(poster.imagePath!);
       if (await file.exists()) {
-        await Share.shareXFiles(
-          [XFile(file.path)],
+        await SharePlus.instance.share(ShareParams(
+          files: [XFile(file.path)],
           text: '"${poster.quoteText}" — ${poster.bookTitle ?? ""}',
-        );
+        ));
         return;
       }
     }
-    await Share.share(
-      '"${poster.quoteText}" — ${poster.bookTitle ?? "ReadMind"}',
-    );
+    await SharePlus.instance.share(ShareParams(
+      text: '"${poster.quoteText}" — ${poster.bookTitle ?? "ReadMind"}',
+    ));
   }
 
   Future<void> saveToGallery(Poster poster) async {

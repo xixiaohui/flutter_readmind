@@ -152,6 +152,7 @@ class _HighlightCard extends ConsumerWidget {
                   onPressed: () async {
                     // 查询书名
                     final bookRepo = ref.read(bookRepositoryProvider);
+                    final navigator = Navigator.of(context);
                     final book =
                         await bookRepo.getBookById(highlight.bookId);
                     ref.read(posterControllerProvider.notifier).createPoster(
@@ -161,7 +162,7 @@ class _HighlightCard extends ConsumerWidget {
                           author: book?.author,
                         );
                     ref.read(posterControllerProvider.notifier).setFontFamily(fontFamily);
-                    Navigator.of(context).push(MaterialPageRoute(
+                    navigator.push(MaterialPageRoute(
                         builder: (_) => const PosterEditorPage()));
                   },
                 ),

@@ -6,10 +6,8 @@
 // @dart = 3.0
 
 import 'dart:io'; // flutter_ignore: dart_io_import.
-import 'package:file_picker/file_picker.dart' as file_picker;
 import 'package:path_provider_android/path_provider_android.dart' as path_provider_android;
 import 'package:shared_preferences_android/shared_preferences_android.dart' as shared_preferences_android;
-import 'package:file_picker/file_picker.dart' as file_picker;
 import 'package:path_provider_foundation/path_provider_foundation.dart' as path_provider_foundation;
 import 'package:shared_preferences_foundation/shared_preferences_foundation.dart' as shared_preferences_foundation;
 import 'package:connectivity_plus/connectivity_plus.dart' as connectivity_plus;
@@ -34,15 +32,6 @@ class _PluginRegistrant {
   static void register() {
     if (Platform.isAndroid) {
       try {
-        file_picker.FilePickerIO.registerWith();
-      } catch (err) {
-        print(
-          '`file_picker` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
-      try {
         path_provider_android.PathProviderAndroid.registerWith();
       } catch (err) {
         print(
@@ -61,15 +50,6 @@ class _PluginRegistrant {
       }
 
     } else if (Platform.isIOS) {
-      try {
-        file_picker.FilePickerIO.registerWith();
-      } catch (err) {
-        print(
-          '`file_picker` threw an error: $err. '
-          'The app may not function as expected until you remove this plugin from pubspec.yaml'
-        );
-      }
-
       try {
         path_provider_foundation.PathProviderFoundation.registerWith();
       } catch (err) {

@@ -122,7 +122,7 @@ class ImportPage extends ConsumerWidget {
 
   /// 打开文件选择器
   Future<void> _pickFile(BuildContext context, WidgetRef ref) async {
-    final result = await FilePicker.platform.pickFiles(
+    final result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['epub', 'txt', 'pdf'],
     );

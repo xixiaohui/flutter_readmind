@@ -19,7 +19,7 @@ abstract class ShareService {
 class ShareServiceImpl implements ShareService {
   @override
   Future<void> shareText(String text, {String? subject}) async {
-    await Share.share(text, subject: subject ?? 'ReadMind');
+    await SharePlus.instance.share(ShareParams(text: text, subject: subject ?? 'ReadMind'));
   }
 
   @override

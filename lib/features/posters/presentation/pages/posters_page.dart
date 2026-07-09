@@ -26,7 +26,7 @@ class PostersPage extends ConsumerWidget {
       ),
       body: postersAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (_, __) => const Center(child: Text('Error')),
+        error: (_, __) => _EmptyState(l10n: l10n),
         data: (posters) {
           if (posters.isEmpty) return _EmptyState(l10n: l10n);
           return _PosterList(posters: posters);

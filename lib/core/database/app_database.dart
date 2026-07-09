@@ -60,6 +60,7 @@ class AppDatabase extends _$AppDatabase {
         onUpgrade: (m, from, to) async {
           if (from < 2) {
             await m.alterTable(
+              // ignore: experimental_member_use
               TableMigration(
                 generatedPosters,
                 newColumns: [

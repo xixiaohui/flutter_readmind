@@ -175,6 +175,7 @@ class _HighlightListItem extends ConsumerWidget {
                   icon: const Icon(Icons.image_outlined, size: 20),
                   tooltip: l10n.createPoster,
                   onPressed: () async {
+                    final navigator = Navigator.of(context);
                     // 从数据库获取真实书名
                     String? bookTitle;
                     final content = readerState.content;
@@ -190,8 +191,8 @@ class _HighlightListItem extends ConsumerWidget {
                           quoteText: highlight.selectedText,
                           bookTitle: bookTitle,
                         );
-                    Navigator.pop(context);
-                    Navigator.of(context).push(MaterialPageRoute(
+                    navigator.pop();
+                    navigator.push(MaterialPageRoute(
                         builder: (_) => const PosterEditorPage()));
                   },
                 ),

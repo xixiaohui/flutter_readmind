@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_theme_mode.dart';
 import '../../../../core/theme/theme_controller.dart';
@@ -43,13 +42,6 @@ class SettingsPage extends ConsumerWidget {
           const _ReadingSettingsSection(),
           const Divider(),
 
-          // 购买设置
-          ListTile(
-            leading: const Icon(Icons.shopping_cart_outlined),
-            title: Text(l10n.purchase),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.go('/purchase'),
-          ),
         ],
       ),
     );

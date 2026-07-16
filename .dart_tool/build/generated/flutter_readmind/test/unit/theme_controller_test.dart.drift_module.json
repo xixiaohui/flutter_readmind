@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_test/flutter_test.dart",
+    "package:flutter_readmind/core/theme/app_theme_mode.dart"
+  ]
+}

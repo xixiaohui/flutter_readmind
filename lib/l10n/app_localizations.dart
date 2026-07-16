@@ -421,30 +421,6 @@ abstract class AppLocalizations {
   /// **'日本語'**
   String get japanese;
 
-  /// No description provided for @purchase.
-  ///
-  /// In en, this message translates to:
-  /// **'Purchase'**
-  String get purchase;
-
-  /// No description provided for @restorePurchase.
-  ///
-  /// In en, this message translates to:
-  /// **'Restore Purchase'**
-  String get restorePurchase;
-
-  /// No description provided for @proVersion.
-  ///
-  /// In en, this message translates to:
-  /// **'Pro Version'**
-  String get proVersion;
-
-  /// No description provided for @upgradeToPro.
-  ///
-  /// In en, this message translates to:
-  /// **'Upgrade to Pro'**
-  String get upgradeToPro;
-
   /// No description provided for @search.
   ///
   /// In en, this message translates to:

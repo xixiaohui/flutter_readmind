@@ -1,0 +1,14 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter/material.dart",
+    "package:flutter/rendering.dart",
+    "package:flutter_riverpod/flutter_riverpod.dart",
+    "package:gal/gal.dart",
+    "package:share_plus/share_plus.dart",
+    "package:path_provider/path_provider.dart",
+    "package:flutter_readmind/core/di/injection.dart",
+    "package:flutter_readmind/features/posters/domain/entities/poster.dart",
+    "package:flutter_readmind/features/posters/domain/repositories/poster_repository.dart"
+  ]
+}

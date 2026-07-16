@@ -45,10 +45,6 @@ class ErrorHandler {
       return '分享失败: ${failure.message}';
     }
 
-    if (failure is PurchaseFailure) {
-      return '购买失败: ${failure.message}';
-    }
-
     return failure.message;
   }
 }

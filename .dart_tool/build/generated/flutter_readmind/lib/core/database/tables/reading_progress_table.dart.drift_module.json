@@ -1,0 +1,226 @@
+{
+  "elements": {
+    "reading_progress": {
+      "id": {
+        "library_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+        "name": "reading_progress"
+      },
+      "declaration": {
+        "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+        "offset": 127,
+        "name": "ReadingProgress"
+      },
+      "references": [],
+      "type": "table",
+      "columns": [
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "id",
+          "nameInDart": "id",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 187,
+            "name": "id"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 主键 ID",
+          "constraints": [
+            {
+              "type": "primary",
+              "is_auto_increment": true
+            }
+          ],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "book_id",
+          "nameInDart": "bookId",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 255,
+            "name": "bookId"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 书籍 ID（外键）",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": true,
+          "nameInSql": "chapter_index",
+          "nameInDart": "chapterIndex",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 323,
+            "name": "chapterIndex"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 章节索引",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": true,
+          "nameInSql": "page_number",
+          "nameInDart": "pageNumber",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 412,
+            "name": "pageNumber"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 页码",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "double"
+          },
+          "nullable": true,
+          "nameInSql": "scroll_position",
+          "nameInDart": "scrollPosition",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 500,
+            "name": "scrollPosition"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 滚动位置",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "double"
+          },
+          "nullable": true,
+          "nameInSql": "progress_percent",
+          "nameInDart": "progressPercent",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 596,
+            "name": "progressPercent"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": null,
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 阅读进度百分比",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "reading_minutes",
+          "nameInDart": "readingMinutes",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 691,
+            "name": "readingMinutes"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": {
+            "elements": [
+              "const ",
+              {
+                "lexeme": "Constant",
+                "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+              },
+              "(0)"
+            ]
+          },
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 阅读分钟数",
+          "constraints": [],
+          "customConstraints": null
+        },
+        {
+          "sqlType": {
+            "builtin": "int"
+          },
+          "nullable": false,
+          "nameInSql": "updated_at",
+          "nameInDart": "updatedAt",
+          "declaration": {
+            "source_uri": "package:flutter_readmind/core/database/tables/reading_progress_table.dart",
+            "offset": 806,
+            "name": "updatedAt"
+          },
+          "typeConverter": null,
+          "clientDefaultCode": null,
+          "defaultArgument": {
+            "elements": [
+              "const ",
+              {
+                "lexeme": "Constant",
+                "import_uri": "package:drift/src/runtime/query_builder/query_builder.dart"
+              },
+              "(0)"
+            ]
+          },
+          "overriddenJsonName": null,
+          "referenceName": null,
+          "documentationComment": "/// 更新时间",
+          "constraints": [],
+          "customConstraints": null
+        }
+      ],
+      "existing_data_class": null,
+      "table_constraints": [],
+      "custom_parent_class": null,
+      "interfaces_for_row_class": [],
+      "fixed_entity_info_name": null,
+      "base_dart_name": "ReadingProgress",
+      "row_class_name": "ReadingProgressData",
+      "companion_class_name": null,
+      "without_rowid": false,
+      "strict": false,
+      "write_default_constraints": true,
+      "custom_constraints": [],
+      "attached_indices": []
+    }
+  },
+  "imports": [
+    "package:drift/drift.dart"
+  ]
+}

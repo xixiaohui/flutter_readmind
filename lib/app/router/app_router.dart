@@ -9,7 +9,6 @@ import '../../features/posters/presentation/pages/posters_page.dart';
 import '../../features/settings/presentation/pages/settings_page.dart';
 import '../../features/import/presentation/pages/import_page.dart';
 import '../../features/reader/presentation/pages/reader_page.dart';
-import '../../features/purchase/presentation/pages/purchase_page.dart';
 import '../../features/search/presentation/pages/search_page.dart';
 import '../app_shell.dart';
 
@@ -73,12 +72,6 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/search',
       builder: (context, state) => const SearchPage(),
-    ),
-
-    /// 购买页面（独立路由）
-    GoRoute(
-      path: '/purchase',
-      builder: (context, state) => const PurchasePage(),
     ),
 
     /// 阅读器页面（独立路由）

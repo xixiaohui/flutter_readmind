@@ -5,7 +5,7 @@
   "packages": [
     {
       "name": "flutter_readmind",
-      "version": "2026.07.09+1783582644",
+      "version": "2026.07.09+1783585475",
       "dependencies": [
         "connectivity_plus",
         "drift",

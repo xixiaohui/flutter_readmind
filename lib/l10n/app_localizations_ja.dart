@@ -172,18 +172,6 @@ class AppLocalizationsJa extends AppLocalizations {
   String get japanese => '日本語';
 
   @override
-  String get purchase => '購入';
-
-  @override
-  String get restorePurchase => '購入復元';
-
-  @override
-  String get proVersion => 'プロ版';
-
-  @override
-  String get upgradeToPro => 'プロ版にアップグレード';
-
-  @override
   String get search => '検索';
 
   @override

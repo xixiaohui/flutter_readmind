@@ -1,7 +1,7 @@
 name: flutter_readmind
 description: ReadMind - Read. Highlight. Share.
 publish_to: 'none'
-version: 2026.07.09+1783582644
+version: 2026.07.09+1783585475
 
 environment:
   sdk: '>=3.0.0 <4.0.0'

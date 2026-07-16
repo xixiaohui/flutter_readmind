@@ -1,0 +1,7 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_readmind/core/use_case/use_case.dart",
+    "package:flutter_readmind/features/import/domain/repositories/import_repository.dart"
+  ]
+}

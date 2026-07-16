@@ -172,18 +172,6 @@ class AppLocalizationsZh extends AppLocalizations {
   String get japanese => '日本語';
 
   @override
-  String get purchase => '购买';
-
-  @override
-  String get restorePurchase => '恢复购买';
-
-  @override
-  String get proVersion => '专业版';
-
-  @override
-  String get upgradeToPro => '升级到专业版';
-
-  @override
   String get search => '搜索';
 
   @override

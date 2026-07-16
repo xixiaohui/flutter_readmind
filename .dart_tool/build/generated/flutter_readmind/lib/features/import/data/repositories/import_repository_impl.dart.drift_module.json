@@ -1,0 +1,12 @@
+{
+  "elements": {},
+  "imports": [
+    "package:drift/drift.dart",
+    "package:flutter_readmind/core/database/app_database.dart",
+    "package:flutter_readmind/core/database/daos/book_dao.dart",
+    "package:flutter_readmind/features/import/domain/repositories/import_repository.dart",
+    "package:flutter_readmind/features/import/data/datasources/epub_parser.dart",
+    "package:flutter_readmind/features/import/data/datasources/txt_parser.dart",
+    "package:flutter_readmind/features/import/data/datasources/pdf_parser.dart"
+  ]
+}

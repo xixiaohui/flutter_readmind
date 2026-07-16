@@ -67,8 +67,3 @@ class ParseFailure extends Failure {
 class ShareFailure extends Failure {
   const ShareFailure(super.message, {super.code});
 }
-
-/// 购买失败
-class PurchaseFailure extends Failure {
-  const PurchaseFailure(super.message, {super.code});
-}

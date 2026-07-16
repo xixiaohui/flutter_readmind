@@ -1,0 +1,8 @@
+{
+  "elements": {},
+  "imports": [
+    "package:flutter_riverpod/flutter_riverpod.dart",
+    "package:shared_preferences/shared_preferences.dart",
+    "package:flutter_readmind/features/reader/domain/entities/book_content.dart"
+  ]
+}

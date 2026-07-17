@@ -65,6 +65,11 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  # Disable Swift Package Manager — project already has SPM integrated in pbxproj.
+  # Flutter 3.44.x migration fails on `xcodeWorkspace` check before checking if already migrated.
+  config:
+    enable-swift-package-manager: false
+
   # Assets
   assets:
     - assets/images/

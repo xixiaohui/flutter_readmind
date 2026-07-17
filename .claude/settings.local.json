@@ -3,7 +3,10 @@
     "allow": [
       "Bash(/d/flutter/flutter/bin/flutter *)",
       "Bash(git config *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(flutter clean *)",
+      "Bash(flutter build *)",
+      "Bash(flutter config *)"
     ]
   }
 }

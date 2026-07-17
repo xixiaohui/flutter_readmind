@@ -1,8 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_readmind/core/use_case/use_case.dart",
-    "package:flutter_readmind/features/reader/domain/entities/book_content.dart",
-    "package:flutter_readmind/features/reader/domain/repositories/reader_repository.dart"
-  ]
-}

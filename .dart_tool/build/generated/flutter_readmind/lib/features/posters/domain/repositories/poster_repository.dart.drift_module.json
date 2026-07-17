@@ -1,6 +1,0 @@
-{
-  "elements": {},
-  "imports": [
-    "package:flutter_readmind/features/posters/domain/entities/poster.dart"
-  ]
-}

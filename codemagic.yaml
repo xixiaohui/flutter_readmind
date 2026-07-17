@@ -10,7 +10,7 @@ definitions:
   # Common env vars
   common_env: &common_env
     APP_NAME: readmind
-    PACKAGE_NAME: com.xxh.flutter_readmind
+    PACKAGE_NAME: com.xxh.flutter-readmind
 
 workflows:
   # ── iOS Release ──────────────────────────────────────────────────
@@ -22,7 +22,7 @@ workflows:
         - app_store_connect
       vars:
         <<: *common_env
-        BUNDLE_ID: com.xxh.flutter_readmind
+        BUNDLE_ID: com.xxh.flutter-readmind
       flutter: stable
       xcode: latest
       cocoapods: default

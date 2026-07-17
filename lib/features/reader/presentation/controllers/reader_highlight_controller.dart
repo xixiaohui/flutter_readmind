@@ -54,27 +54,41 @@ class ReaderHighlightState {
 /// 阅读器高亮控制器
 class ReaderHighlightController extends StateNotifier<ReaderHighlightState> {
   final HighlightRepository _repository;
+  bool _disposed = false;
 
   ReaderHighlightController(this._repository)
       : super(const ReaderHighlightState());
 
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  /// 安全更新 state，避免在 controller 已 dispose 后通知 listener
+  void _safeSetState(ReaderHighlightState newState) {
+    if (!_disposed) {
+      state = newState;
+    }
+  }
+
   /// 加载指定书籍的所有高亮
   Future<void> loadHighlights(int bookId) async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
+    _safeSetState(state.copyWith(isLoading: true, errorMessage: null));
     try {
       final highlights = await _repository.getHighlightsByBookId(bookId);
-      state = state.copyWith(isLoading: false, highlights: highlights);
+      _safeSetState(state.copyWith(isLoading: false, highlights: highlights));
     } catch (e) {
-      state = state.copyWith(
+      _safeSetState(state.copyWith(
         isLoading: false,
         errorMessage: e.toString(),
-      );
+      ));
     }
   }
 
   /// 设置高亮颜色
   void setColor(HighlightColorOption color) {
-    state = state.copyWith(selectedColor: color);
+    _safeSetState(state.copyWith(selectedColor: color));
   }
 
   /// 创建高亮（参数直接传入，避免在 build 阶段修改 provider）
@@ -102,7 +116,7 @@ class ReaderHighlightController extends StateNotifier<ReaderHighlightState> {
       await _repository.insertHighlight(highlight);
       await loadHighlights(bookId);
     } catch (e) {
-      state = state.copyWith(errorMessage: e.toString());
+      _safeSetState(state.copyWith(errorMessage: e.toString()));
     }
   }
 
@@ -112,7 +126,7 @@ class ReaderHighlightController extends StateNotifier<ReaderHighlightState> {
       await _repository.deleteHighlight(highlightId);
       await loadHighlights(bookId);
     } catch (e) {
-      state = state.copyWith(errorMessage: e.toString());
+      _safeSetState(state.copyWith(errorMessage: e.toString()));
     }
   }
 }

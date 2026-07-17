@@ -172,6 +172,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get japanese => '日本語';
 
   @override
+  String get purchase => 'Purchase';
+
+  @override
+  String get restorePurchase => 'Restore Purchase';
+
+  @override
+  String get proVersion => 'Pro Version';
+
+  @override
+  String get upgradeToPro => 'Upgrade to Pro';
+
+  @override
   String get search => 'Search';
 
   @override

@@ -18,6 +18,7 @@ class RoutePaths {
   static const String highlights = '/highlights';
   static const String posters = '/posters';
   static const String settings = '/settings';
+  static const String purchase = '/purchase';
   static const String import = '/import';
 
   // 私有构造函数防止实例化
@@ -29,6 +30,7 @@ class StorageKeys {
   static const String themeMode = 'theme_mode';
   static const String locale = 'locale';
   static const String onboardingComplete = 'onboarding_complete';
+  static const String proStatus = 'pro_status';
 
   // 私有构造函数防止实例化
   StorageKeys._();

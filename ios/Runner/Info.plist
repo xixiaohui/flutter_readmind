@@ -32,6 +32,8 @@
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Save poster images to your photo library.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Save poster images to your photo library.</string>
 	<key>UIApplicationSceneManifest</key>

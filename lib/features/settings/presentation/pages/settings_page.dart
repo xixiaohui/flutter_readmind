@@ -3,7 +3,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import '../../../../core/theme/app_theme_mode.dart';
 import '../../../../core/theme/theme_controller.dart';
 import '../../../../core/theme/locale_controller.dart';
@@ -40,8 +39,6 @@ class SettingsPage extends ConsumerWidget {
 
           // 阅读设置
           const _ReadingSettingsSection(),
-          const Divider(),
-
         ],
       ),
     );

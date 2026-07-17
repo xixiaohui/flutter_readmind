@@ -43,18 +43,28 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
   PageController? _pageController;
   int _lastChapter = -1;
 
+  bool _disposed = false;
+
+  // 捕获 notifier 引用，避免 dispose 中 ref 已失效
+  late final _readerNotifier = ref.read(readerControllerProvider.notifier);
+
   @override
   void initState() {
     super.initState();
-    Future(() => _loadBook());
+    _readerNotifier; // 触发 late final 的初始化，捕获 notifier 引用
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!_disposed) _loadBook();
+    });
   }
 
   Future<void> _loadBook() async {
+    if (_disposed) return;
     await ref.read(readerControllerProvider.notifier).loadBook(
           widget.filePath,
           widget.fileType,
           widget.bookId,
         );
+    if (_disposed) return;
     ref
         .read(readerHighlightControllerProvider.notifier)
         .loadHighlights(widget.bookId);
@@ -245,7 +255,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
 
   @override
   void dispose() {
-    ref.read(readerControllerProvider.notifier).savePosition();
+    _disposed = true;
+    _readerNotifier.savePosition();
     _pageController?.dispose();
     super.dispose();
   }
@@ -628,9 +639,13 @@ class _SearchSheetState extends ConsumerState<_SearchSheet> {
   final _searchController = TextEditingController();
   final _focusNode = FocusNode();
 
+  // 捕获 notifier 引用，避免 dispose 中 ref 已失效
+  late final _readerNotifier = ref.read(readerControllerProvider.notifier);
+
   @override
   void initState() {
     super.initState();
+    _readerNotifier; // 触发 late final 的初始化，捕获 notifier 引用
     _focusNode.requestFocus();
   }
 
@@ -639,7 +654,7 @@ class _SearchSheetState extends ConsumerState<_SearchSheet> {
     _searchController.dispose();
     _focusNode.dispose();
     // 关闭搜索面板时清空搜索
-    ref.read(readerControllerProvider.notifier).clearSearch();
+    _readerNotifier.clearSearch();
     super.dispose();
   }
 

@@ -1,7 +1,7 @@
 name: flutter_readmind
 description: ReadMind - Read. Highlight. Share.
 publish_to: 'none'
-version: 2026.07.09+1783585475
+version: 2026.07.17+1783582645
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
@@ -64,11 +64,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  # Disable Swift Package Manager — project already has SPM integrated in pbxproj.
-  # Flutter 3.44.x migration fails on `xcodeWorkspace` check before checking if already migrated.
-  config:
-    enable-swift-package-manager: false
 
   # Assets
   assets:

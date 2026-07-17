@@ -1,0 +1,58 @@
+Running `(cd /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/; ANDROID_HOME=/Users/xixiaohui/Library/Android/sdk TMPDIR=/var/folders/kk/3k42ls497dn6gyc3f0v_3zvc0000gn/T/ ANDROID_NDK_ROOT=/Users/xixiaohui/Library/Android/sdk/ndk/30.0.14904198 PATH=/Applications/Xcode.app/Contents/SharedFrameworks/SwiftBuild.framework/Versions/A/PlugIns/SWBBuildService.bundle/Contents/PlugIns/SWBUniversalPlatformPlugin.bundle/Contents/Frameworks/SWBUniversalPlatform.framework/Resources:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/usr/local/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin HOME=/Users/xixiaohui ANDROID_NDK_HOME=/Users/xixiaohui/Library/Android/sdk/ndk/30.0.14904198 /Users/xixiaohui/Documents/flutter/bin/cache/dart-sdk/bin/dart --packages=/Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/package_config.json /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/objective_c/63843f2ee8/hook.dill --config=/Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/objective_c/63843f2ee8/input.json )`.
+INFO: 2026-07-17 21:47:15.864364: Using compiler /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang from BuildInput.cCompiler.cc.
+
+INFO: 2026-07-17 21:47:15.867764: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/include/dart_api_dl.c -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-07-17 21:47:15.868758: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c.c -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c.c.o
+
+INFO: 2026-07-17 21:47:15.869043: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c.m -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c.m.o
+
+ream_adapter.m.o
+
+INFO: 2026-07-17 21:47:15.869163: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/observer.m -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/observer.m.o
+
+INFO: 2026-07-17 21:47:15.869283: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/ns_number.m -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/ns_number.m.o
+
+INFO: 2026-07-17 21:47:15.869404: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/protocol.m -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/protocol.m.o
+
+INFO: 2026-07-17 21:47:15.869702: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 -x objective-c -fobjc-arc -c /Users/xixiaohui/.pub-cache/hosted/pub.dev/objective_c-9.4.1/src/objective_c_bindings_generated.m -fpic -gline-tables-only -I src -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-07-17 21:47:15.910704: 
+INFO: 2026-07-17 21:47:15.910968: 
+INFO: 2026-07-17 21:47:15.911043: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-07-17 21:47:15.914172: 
+INFO: 2026-07-17 21:47:15.914245: 
+INFO: 2026-07-17 21:47:15.914275: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c.c.o
+
+INFO: 2026-07-17 21:47:15.933597: 
+INFO: 2026-07-17 21:47:15.933640: 
+INFO: 2026-07-17 21:47:15.933651: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/observer.m.o
+
+INFO: 2026-07-17 21:47:15.939895: 
+INFO: 2026-07-17 21:47:15.939937: 
+INFO: 2026-07-17 21:47:15.939952: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/protocol.m.o
+
+INFO: 2026-07-17 21:47:16.032813: 
+INFO: 2026-07-17 21:47:16.032858: 
+INFO: 2026-07-17 21:47:16.032869: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/ns_number.m.o
+
+INFO: 2026-07-17 21:47:16.033189: 
+INFO: 2026-07-17 21:47:16.033227: 
+INFO: 2026-07-17 21:47:16.033241: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c.m.o
+
+INFO: 2026-07-17 21:47:16.034717: 
+INFO: 2026-07-17 21:47:16.034748: 
+INFO: 2026-07-17 21:47:16.034760: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-07-17 21:47:16.061606: 
+INFO: 2026-07-17 21:47:16.061649: 
+INFO: 2026-07-17 21:47:16.061660: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-07-17 21:47:16.061986: Running: /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS26.5.sdk -target arm64-apple-ios -mios-version-min=13 /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/include/dart_api_dl.c.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c.c.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/input_stream_adapter.m.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c.m.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/observer.m.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/ns_number.m.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/protocol.m.o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/obj/src/objective_c_bindings_generated.m.o -o /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/objective_c.dylib
+
+INFO: 2026-07-17 21:47:16.101588: 
+INFO: 2026-07-17 21:47:16.101680: ld: warning: -undefined dynamic_lookup is deprecated on iOS
+
+INFO: 2026-07-17 21:47:16.101692: Generated /Users/xixiaohui/Documents/workspace/flutter_readmind-main/.dart_tool/hooks_runner/shared/objective_c/build/63843f2ee8/objective_c.dylib
+

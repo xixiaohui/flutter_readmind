@@ -63,12 +63,26 @@ class ReaderState {
 /// Reader Controller
 class ReaderController extends StateNotifier<ReaderState> {
   final ReaderRepository _repository;
+  bool _disposed = false;
 
   ReaderController(this._repository) : super(const ReaderState());
 
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  /// 安全更新 state，避免在 controller 已 dispose 后通知 listener
+  void _safeSetState(ReaderState newState) {
+    if (!_disposed) {
+      state = newState;
+    }
+  }
+
   /// 加载书籍内容
   Future<void> loadBook(String filePath, String fileType, int bookId) async {
-    state = state.copyWith(isLoading: true, errorMessage: null);
+    _safeSetState(state.copyWith(isLoading: true, errorMessage: null));
 
     try {
       final content = await _repository.getBookContent(filePath, fileType, bookId);
@@ -80,36 +94,36 @@ class ReaderController extends StateNotifier<ReaderState> {
         position = ReadingPosition.initial(content.bookId);
       }
 
-      state = state.copyWith(
+      _safeSetState(state.copyWith(
         isLoading: false,
         content: content,
         position: position,
         currentChapter: position.chapterIndex,
         currentPage: position.pageNumber,
-      );
+      ));
     } catch (e) {
-      state = state.copyWith(
+      _safeSetState(state.copyWith(
         isLoading: false,
         errorMessage: e.toString(),
-      );
+      ));
     }
   }
 
   /// 设置当前章节（自动保存进度）
   void setChapter(int chapterIndex) {
-    state = state.copyWith(currentChapter: chapterIndex, clearScrollTo: true);
+    _safeSetState(state.copyWith(currentChapter: chapterIndex, clearScrollTo: true));
     savePosition();
   }
 
   /// 设置当前页码
   void setPage(int pageNumber) {
-    state = state.copyWith(currentPage: pageNumber);
+    _safeSetState(state.copyWith(currentPage: pageNumber));
   }
 
   /// 全文搜索
   void search(String query) {
     if (query.isEmpty || state.content == null) {
-      state = state.copyWith(clearSearch: true);
+      _safeSetState(state.copyWith(clearSearch: true));
       return;
     }
 
@@ -143,28 +157,28 @@ class ReaderController extends StateNotifier<ReaderState> {
       if (results.length >= 50) break;
     }
 
-    state = state.copyWith(
+    _safeSetState(state.copyWith(
       searchQuery: query,
       searchResults: results,
-    );
+    ));
   }
 
   /// 清空搜索
   void clearSearch() {
-    state = state.copyWith(clearSearch: true);
+    _safeSetState(state.copyWith(clearSearch: true));
   }
 
   /// 跳转到搜索结果
   void navigateToSearchResult(SearchMatch match) {
-    state = state.copyWith(
+    _safeSetState(state.copyWith(
       currentChapter: match.chapterIndex,
       scrollToOffset: match.startOffset,
-    );
+    ));
   }
 
   /// 清除滚动偏移
   void clearScrollToOffset() {
-    state = state.copyWith(clearScrollTo: true);
+    _safeSetState(state.copyWith(clearScrollTo: true));
   }
 
   /// 保存阅读位置
@@ -180,7 +194,7 @@ class ReaderController extends StateNotifier<ReaderState> {
     );
 
     await _repository.saveReadingPosition(position);
-    state = state.copyWith(position: position);
+    _safeSetState(state.copyWith(position: position));
   }
 
   /// 计算阅读进度

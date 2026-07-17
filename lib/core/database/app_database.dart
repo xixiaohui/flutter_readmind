@@ -18,6 +18,7 @@ import 'tables/collection_items_table.dart';
 import 'tables/bookmarks_table.dart';
 import 'tables/search_history_table.dart';
 import 'tables/user_settings_table.dart';
+import 'tables/purchase_status_table.dart';
 import 'tables/analytics_events_table.dart';
 import 'tables/sync_queue_table.dart';
 import 'tables/app_metadata_table.dart';
@@ -42,6 +43,7 @@ part 'app_database.g.dart';
     Bookmarks,
     SearchHistory,
     UserSettings,
+    PurchaseStatus,
     AnalyticsEvents,
     SyncQueue,
     AppMetadata,

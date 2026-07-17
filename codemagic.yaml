@@ -1,0 +1,117 @@
+# Codemagic CI/CD configuration for cibei_space (慈悲空间)
+# Docs: https://docs.codemagic.io/yaml-quick-start/building-a-flutter-app/
+
+definitions:
+  # Shared instance config via YAML anchor — reuse across workflows
+  common_instance: &common_instance
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+
+  # Common env vars
+  common_env: &common_env
+    APP_NAME: readmind
+    PACKAGE_NAME: com.xxh.flutter_readmind
+
+workflows:
+  # ── iOS Release ──────────────────────────────────────────────────
+  ios-release:
+    <<: *common_instance
+    name: iOS Release
+    environment:
+      groups:
+        - app_store_connect
+      vars:
+        <<: *common_env
+        BUNDLE_ID: com.xxh.flutter_readmind
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      java: 17
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    triggering:
+      events:
+        - push
+        - tag
+      branch_patterns:
+        - pattern: 'main'
+          include: true
+          source: true
+      tag_patterns:
+        - pattern: 'v*'
+          include: true
+      cancel_previous_builds: true
+    scripts:
+      - name: Keychain setup
+        script: keychain initialize
+      - name: Fetch signing files
+        script: |
+          app-store-connect fetch-signing-files "$BUNDLE_ID" \
+            --type IOS_APP_STORE \
+            --create
+      - name: Add certificates to keychain
+        script: keychain add-certificates
+      - name: Apply code signing profiles
+        script: xcode-project use-profiles
+      - name: Verify no Game Center in entitlements
+        script: |
+          ENTITLEMENTS="ios/Runner/Runner.entitlements"
+          echo "=== Checking $ENTITLEMENTS ==="
+          cat "$ENTITLEMENTS"
+          if /usr/libexec/PlistBuddy -c "Print :com.apple.developer.game-center" "$ENTITLEMENTS" 2>/dev/null; then
+            echo "ERROR: Game Center found in entitlements!"
+            exit 1
+          else
+            echo "OK: No Game Center in entitlements"
+          fi
+      - name: Get Flutter dependencies
+        script: |
+          flutter pub get
+          cd ios && pod install --repo-update
+      - name: Run code generation
+        script: dart run build_runner build --delete-conflicting-outputs
+      - name: Run tests
+        script: flutter test --no-pub
+      - name: Build IPA (release)
+        script: |
+          flutter build ipa --release \
+            --build-number=$PROJECT_BUILD_NUMBER
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+
+        submit_to_testflight: true
+      email:
+        recipients:
+          - 6619766@gmail.com
+
+  # ── PR Checks (lightweight, runs on every PR) ────────────────────
+  pr-checks:
+    <<: *common_instance
+    name: PR Checks
+    environment:
+      vars:
+        <<: *common_env
+      flutter: stable
+      java: 17
+    cache:
+      cache_paths:
+        - ~/.pub-cache
+    triggering:
+      events:
+        - pull_request
+      cancel_previous_builds: true
+    scripts:
+      - name: Get Flutter dependencies
+        script: flutter pub get
+      - name: Run code generation
+        script: dart run build_runner build --delete-conflicting-outputs
+      - name: Run static analysis
+        script: flutter analyze --no-pub
+      - name: Run tests
+        script: flutter test --no-pub

@@ -1,4 +1,4 @@
-# Codemagic CI/CD configuration for cibei_space (慈悲空间)
+# Codemagic CI/CD configuration for readmind
 # Docs: https://docs.codemagic.io/yaml-quick-start/building-a-flutter-app/
 
 definitions:

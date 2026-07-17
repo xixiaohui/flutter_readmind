@@ -66,9 +66,7 @@ workflows:
             echo "OK: No Game Center in entitlements"
           fi
       - name: Get Flutter dependencies
-        script: |
-          flutter pub get
-          cd ios && pod install --repo-update
+        script: flutter pub get
       - name: Run code generation
         script: dart run build_runner build --delete-conflicting-outputs
       - name: Run tests

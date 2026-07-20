@@ -1,8 +1,12 @@
 // reader_page.dart
 // 阅读器页面 — 支持高亮创建、高亮显示、海报生成
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:pdfx/pdfx.dart';
+import 'package:epub_view/epub_view.dart';
 
 import '../../../../core/theme/reader_settings_controller.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -75,6 +79,8 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     final l10n = AppLocalizations.of(context)!;
     final readerState = ref.watch(readerControllerProvider);
     final globalSettings = ref.watch(readerSettingsControllerProvider);
+    final isTextContent = readerState.content != null &&
+        readerState.content!.fileType == 'txt';
 
     return Scaffold(
       appBar: AppBar(
@@ -83,11 +89,12 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
           style: Theme.of(context).textTheme.titleMedium,
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            tooltip: l10n.searchBook,
-            onPressed: () => _showSearchPanel(context, readerState),
-          ),
+          if (isTextContent)
+            IconButton(
+              icon: const Icon(Icons.search),
+              tooltip: l10n.searchBook,
+              onPressed: () => _showSearchPanel(context, readerState),
+            ),
           IconButton(
             icon: const Icon(Icons.format_paint_outlined),
             tooltip: l10n.highlights,
@@ -115,7 +122,7 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     );
   }
 
-  /// 构建主体内容
+  /// 构建主体内容 — 根据文件类型分发不同的渲染器
   Widget _buildBody(ReaderState state, ReaderSettingsState settings) {
     final l10n = AppLocalizations.of(context)!;
     if (state.isLoading) {
@@ -128,6 +135,19 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
       return Center(child: Text(l10n.noContent));
     }
 
+    final contentType = state.content!.fileType;
+
+    // PDF — 使用 pdfx 原生渲染
+    if (contentType == 'pdf') {
+      return _PdfReaderBody(filePath: state.content!.filePath);
+    }
+
+    // EPUB — 使用 epub_view 原生渲染
+    if (contentType == 'epub') {
+      return _EpubReaderBody(filePath: state.content!.filePath);
+    }
+
+    // TXT — 文本渲染（分页/滚动 + 高亮 + 搜索）
     final chapters = state.content!.chapters;
     if (chapters.isEmpty) {
       return Center(child: Text(l10n.noContentAvailable));
@@ -574,9 +594,13 @@ class _ReaderPageState extends ConsumerState<ReaderPage> {
     );
   }
 
-  /// 构建导航按钮
+  /// 构建导航按钮 — 仅文本模式显示
   Widget? _buildNavigationButtons(ReaderState state) {
-    if (state.content == null || state.content!.chapters.isEmpty) return null;
+    if (state.content == null) return null;
+
+    // 非 TXT 格式不显示章节导航
+    if (state.content!.fileType != 'txt') return null;
+    if (state.content!.chapters.length <= 1) return null;
 
     final chapters = state.content!.chapters;
     final l10n = AppLocalizations.of(context)!;
@@ -785,6 +809,87 @@ class _SearchResultTile extends ConsumerWidget {
       start = index + query.length;
     }
     return TextSpan(children: spans);
+  }
+}
+
+/// EPUB 阅读器主体 — 使用 epub_view 原生渲染
+class _EpubReaderBody extends StatefulWidget {
+  final String filePath;
+  const _EpubReaderBody({required this.filePath});
+
+  @override
+  State<_EpubReaderBody> createState() => _EpubReaderBodyState();
+}
+
+class _EpubReaderBodyState extends State<_EpubReaderBody> {
+  late final EpubController _epubController;
+
+  @override
+  void initState() {
+    super.initState();
+    _epubController = EpubController(
+      document: EpubDocument.openFile(File(widget.filePath)),
+    );
+  }
+
+  @override
+  void dispose() {
+    _epubController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return EpubView(controller: _epubController);
+  }
+}
+
+/// PDF 阅读器主体 — 使用 pdfx 原生渲染
+class _PdfReaderBody extends StatefulWidget {
+  final String filePath;
+  const _PdfReaderBody({required this.filePath});
+
+  @override
+  State<_PdfReaderBody> createState() => _PdfReaderBodyState();
+}
+
+class _PdfReaderBodyState extends State<_PdfReaderBody> {
+  late final PdfController _pdfController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pdfController = PdfController(
+      document: PdfDocument.openFile(widget.filePath),
+    );
+  }
+
+  @override
+  void dispose() {
+    _pdfController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return PdfView(
+      controller: _pdfController,
+      onDocumentError: (error) {
+        showDialog(
+          context: this.context,
+          builder: (ctx) => AlertDialog(
+            title: const Text('Error'),
+            content: Text('Failed to open PDF:\n$error'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(ctx),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 

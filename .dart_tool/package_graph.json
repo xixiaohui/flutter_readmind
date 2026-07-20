@@ -34,7 +34,7 @@
     },
     {
       "name": "drift_dev",
-      "version": "2.34.2+1",
+      "version": "2.34.4",
       "dependencies": [
         "analyzer",
         "args",
@@ -142,7 +142,7 @@
     },
     {
       "name": "share_plus",
-      "version": "13.2.0",
+      "version": "13.2.1",
       "dependencies": [
         "cross_file",
         "ffi",
@@ -227,7 +227,7 @@
     },
     {
       "name": "connectivity_plus",
-      "version": "7.2.0",
+      "version": "7.3.0",
       "dependencies": [
         "collection",
         "connectivity_plus_platform_interface",
@@ -270,7 +270,7 @@
     },
     {
       "name": "sqlite3",
-      "version": "3.3.4",
+      "version": "3.5.0",
       "dependencies": [
         "code_assets",
         "collection",
@@ -286,7 +286,7 @@
     },
     {
       "name": "drift",
-      "version": "2.34.1",
+      "version": "2.34.2",
       "dependencies": [
         "async",
         "collection",
@@ -861,7 +861,7 @@
     },
     {
       "name": "uuid",
-      "version": "4.5.3",
+      "version": "4.6.0",
       "dependencies": [
         "crypto",
         "fixnum"
@@ -1013,7 +1013,7 @@
     },
     {
       "name": "shared_preferences_android",
-      "version": "2.4.26",
+      "version": "2.4.27",
       "dependencies": [
         "flutter",
         "meta",

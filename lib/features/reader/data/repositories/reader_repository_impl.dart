@@ -56,10 +56,10 @@ class ReaderRepositoryImpl implements ReaderRepository {
   }
 
   /// 加载 EPUB 内容
+  /// EPUB 是 ZIP 压缩包，内部包含 XML/HTML 文件，不能直接当文本读取。
+  /// 当前返回占位章节，后续集成 epub_view 进行渲染。
   Future<BookContent> _loadEpubContent(
       File file, String fileName, int bookId) async {
-    final content = await file.readAsString();
-    final chapters = _splitIntoChapters(content);
     final title = fileName.replaceAll('.epub', '').replaceAll('_', ' ');
 
     return BookContent(
@@ -67,15 +67,21 @@ class ReaderRepositoryImpl implements ReaderRepository {
       title: title,
       fileType: 'epub',
       filePath: file.path,
-      chapters: chapters,
+      chapters: [
+        const Chapter(
+          index: 0,
+          title: '',
+          content: '',
+        ),
+      ],
     );
   }
 
   /// 加载 PDF 内容
+  /// PDF 是二进制格式，不能当文本读取。
+  /// 当前返回占位章节，后续集成 pdfx 进行渲染。
   Future<BookContent> _loadPdfContent(
       File file, String fileName, int bookId) async {
-    final content = await file.readAsString();
-    final chapters = _splitIntoChapters(content);
     final title = fileName.replaceAll('.pdf', '').replaceAll('_', ' ');
 
     return BookContent(
@@ -83,7 +89,13 @@ class ReaderRepositoryImpl implements ReaderRepository {
       title: title,
       fileType: 'pdf',
       filePath: file.path,
-      chapters: chapters,
+      chapters: [
+        const Chapter(
+          index: 0,
+          title: '',
+          content: '',
+        ),
+      ],
     );
   }
 
